@@ -20,7 +20,7 @@ from rest_framework import generics
 
 ## imports for rest response class
 #from rest_framework import status
-#from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view
 #from rest_framework.response import Response
 
 # imports for project
@@ -31,6 +31,17 @@ from api.serializers import TestAPISerializer
 from django.contrib.auth.models import User
 from api.serializers import UserSerializer
 
+# permissions
+from rest_framework import permissions
+from api.permissions import IsOwnerOrReadOnly
+
+
+@api_view(('GET',))
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'testapi': reverse('testapi-list', request=request, format=format)
+        })
 
 
 ###########
@@ -43,6 +54,7 @@ class APIList(generics.ListCreateAPIView):
     """
     queryset = TestAPI.objects.all()
     serializer_class = TestAPISerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -53,6 +65,8 @@ class APIDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = TestAPI.objects.all()
     serializer_class = TestAPISerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
 
 # user auth views
 class UserList(generics.ListAPIView):

@@ -35,12 +35,12 @@ from django.contrib.auth.models import User
 class TestAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = TestAPI
-        fields = ('id', 'title', 'code', 'owner')
         owner = serializers.ReadOnlyField(source='owner.username')
+        fields = ('owner', 'id', 'title', 'code',)
 
 class UserSerializer(serializers.ModelSerializer):
     testapi = serializers.PrimaryKeyRelatedField(many=True, 
                                              queryset=TestAPI.objects.all())
     class Meta:
         model = User
-        fields = ('id', 'username', 'testapi')
+        fields = ('id', 'username', 'testapi',)
