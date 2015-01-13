@@ -7,7 +7,7 @@ class TestAPI(models.Model):
     code = models.TextField()
 
     #permission fields
-    ownder = models.ForeignKey('auth.User', related_name='testapi')
+    owner = models.ForeignKey('auth.User', related_name='testapi')
     highlighted = models.TextField()
 
     class Meta:

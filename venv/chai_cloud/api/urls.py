@@ -10,6 +10,8 @@ urlpatterns = [
     # APIView class method
     url(r'^api/$', views.APIList.as_view()),
     url(r'^api/(?P<pk>[0-9]+)/$', views.APIDetail.as_view()),
+    url(r'^users/$', views.UserList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
 ]
 
 # format .json, .yaml url suffixes

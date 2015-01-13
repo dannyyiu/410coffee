@@ -44,6 +44,9 @@ class APIList(generics.ListCreateAPIView):
     queryset = TestAPI.objects.all()
     serializer_class = TestAPISerializer
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 class APIDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update, or delete an api instance.
@@ -56,8 +59,8 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class userDetail(generics.RetrieveAPIView):
-    queryset = user.objects.all()
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
 

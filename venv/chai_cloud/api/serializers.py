@@ -2,6 +2,8 @@ from django.forms import widgets
 from rest_framework import serializers
 from api.models import TestAPI
 
+from django.contrib.auth.models import User
+
 ## using serializer class
 #class TestAPISerializer(serializers.Serializer):
 #    pk = serializers.IntegerField(read_only=True)
@@ -33,11 +35,12 @@ from api.models import TestAPI
 class TestAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = TestAPI
-        fields = ('id', 'title', 'code')
+        fields = ('id', 'title', 'code', 'owner')
+        owner = serializers.ReadOnlyField(source='owner.username')
 
 class UserSerializer(serializers.ModelSerializer):
-    api = serializers.PrimaryKeyRelatedField(many=True, 
+    testapi = serializers.PrimaryKeyRelatedField(many=True, 
                                              queryset=TestAPI.objects.all())
     class Meta:
         model = User
-        fields = ('id', 'username', 'api')
+        fields = ('id', 'username', 'testapi')

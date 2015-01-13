@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(default=b'', max_length=100, blank=True)),
                 ('code', models.TextField()),
                 ('highlighted', models.TextField()),
-                ('ownder', models.ForeignKey(related_name='testapi', to=settings.AUTH_USER_MODEL)),
+                ('owner', models.ForeignKey(related_name='testapi', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('created',),
