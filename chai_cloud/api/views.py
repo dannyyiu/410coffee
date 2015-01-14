@@ -43,7 +43,6 @@ def api_root(request, format=None):
         'testapi': reverse('testapi-list', request=request, format=format)
         })
 
-
 ###########
 # using generic class based (shortest)
 ###########
@@ -55,9 +54,9 @@ class APIList(generics.ListCreateAPIView):
     queryset = TestAPI.objects.all()
     serializer_class = TestAPISerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class APIDetail(generics.RetrieveUpdateDestroyAPIView):
     """

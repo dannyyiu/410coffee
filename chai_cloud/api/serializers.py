@@ -36,7 +36,7 @@ class TestAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = TestAPI
         owner = serializers.ReadOnlyField(source='owner.username')
-        fields = ('owner', 'id', 'title', 'code',)
+        fields = ('id', 'title', 'code', 'owner')
 
 class UserSerializer(serializers.ModelSerializer):
     testapi = serializers.PrimaryKeyRelatedField(many=True, 

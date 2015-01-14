@@ -17,3 +17,5 @@ class TestAPI(models.Model):
         "Add values to highlighted"
         self.highlighted = "----"+self.code+"----"
         super(TestAPI, self).save(*args, **kwargs)
+
+
