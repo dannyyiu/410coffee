@@ -50,3 +50,5 @@ coverage.xml
 docs/_build/
 
 .DS_Store
+include/
+_gitignore-flush.command
