@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="core-3.0.1-SNAPSHOT">
+    <archive path="/Users/dannyyiu/Development/zxing-master/android/libs/core-3.0.1-SNAPSHOT.jar" />
+  </library>
+</eclipse-userlibraries>
+
