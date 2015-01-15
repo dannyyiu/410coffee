@@ -8,9 +8,9 @@ sudo apt-get install mysql-server python-mysqldb
 sudo easy_install djangorestframework
 sudo easy_install django-filter 
 
-sudo cp chai.conf /etc/apache2/sites-enabled/chai.conf
+sudo cp /home/ubuntu/chai/chai_cloud/chai.conf /etc/apache2/sites-enabled/chai.conf
 
-sudo chmod -R a+x .
+sudo chmod -R a+x /home/ubuntu/chai/chai_cloud
 sudo chmod -R a+w static/
 sudo chmod -R a+w media/
 sudo chmod -R a+w /var/www/

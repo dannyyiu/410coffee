@@ -27,20 +27,10 @@ class Stores(models.Model):
 # Contains all possible categories for menu items
 class Category(models.Model):
     cat_id = models.AutoField(primary_key=True)
-    cat_name = models.CharField(max_length=250)
+    cat_name = models.CharField(max_length=250, unique=True)
 
     class Meta:
         db_table = "Category"
-
-# Franchise table: Option
-# Contains all possible options for menu items
-class Option(models.Model):
-    op_id = models.AutoField(primary_key=True)
-    op_name = models.CharField(blank=True, default='', max_length=250)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-
-    class Meta:
-        db_table = "Option"
 
 # Franchise table: Menu
 # Contains all menu products and their respective categories
@@ -48,7 +38,7 @@ class Menu(models.Model):
     prod_id = models.AutoField(primary_key=True)
     prod_name = models.CharField(max_length=200, unique=True) # required
     cat = models.ForeignKey(Category)
-    op = models.ManyToManyField(Option)
+    #op = models.ManyToManyField(Option)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     img_path = models.CharField(blank=True, default='', max_length=300) # path to image file
     desc = models.CharField(blank=True, default='', max_length=500)
@@ -56,15 +46,26 @@ class Menu(models.Model):
     class Meta:
         db_table = "Menu"
 
+# Franchise table: Option
+# Contains all possible options for menu items
+class Option(models.Model):
+    op_id = models.AutoField(primary_key=True)
+    prod = models.ForeignKey(Menu)
+    op_name = models.CharField(blank=True, default='', max_length=250)
+    price = models.DecimalField(blank=True, default=0, max_digits=6, decimal_places=2)
+
+    class Meta:
+        db_table = "Option"
+
 # Customer Table: Customer
 # Contains customer information
 class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)
     fname = models.CharField(max_length=100)
     lname = models.CharField(max_length=100)
-    email = models.CharField(max_length=254)
+    email = models.CharField(max_length=254, unique=True)
     passhash = models.CharField(max_length=128) # bcrypt max 76, sha256 max 64, sha512 max 128
-    store = models.ForeignKey(Stores)
+    store = models.ForeignKey(Stores, blank=True, null=True)
 
     class Meta:
         db_table = "Customer"
