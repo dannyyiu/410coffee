@@ -1,11 +1,7 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
-
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'chai_cloud.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('api.urls'))
-)
+from api.views import api_router # Import the api_router defined above
+ 
+urlpatterns = patterns(
+    '', 
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include(api_router.urls)),)
