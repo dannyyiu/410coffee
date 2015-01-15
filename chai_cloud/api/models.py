@@ -15,8 +15,9 @@ class Photo(models.Model):
 # Contains store information such as name, description, and active status
 class Stores(models.Model):
     store_id = models.AutoField(primary_key=True)
-    store_name = models.CharField(max_length=250, unique=True) # required
-    store_desc = models.TextField(blank=True, default='')
+    name = models.CharField(max_length=250, unique=True) # required
+    desc = models.TextField(blank=True, default='')
+    phone = models.CharField(blank=True, default='', max_length=12)
     active = models.IntegerField(blank=True, default=0)
     
     class Meta:
@@ -35,7 +36,8 @@ class Category(models.Model):
 # Contains all possible options for menu items
 class Option(models.Model):
     op_id = models.AutoField(primary_key=True)
-    op_name = models.CharField(max_length=250)
+    op_name = models.CharField(blank=True, default='', max_length=250)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
 
     class Meta:
         db_table = "Option"
@@ -49,6 +51,7 @@ class Menu(models.Model):
     op = models.ManyToManyField(Option)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     img_path = models.CharField(blank=True, default='', max_length=300) # path to image file
+    desc = models.CharField(blank=True, default='', max_length=500)
 
     class Meta:
         db_table = "Menu"
@@ -76,12 +79,12 @@ class Customer(models.Model):
 # Store table: Inventory
 # Contains product stock levels, price and active status
 class Inventory(models.Model):
-    prod = models.ForeignKey(Menu, primary_key=True)
-    stock = models.IntegerField(default=0) # required
-    # price override if not null. If null or 0, set to price in Menu table.
-    price = models.DecimalField(blank=True, max_digits=6, decimal_places=2)
+    prod = models.ForeignKey(Menu)
+    stock = models.IntegerField(blank=True, default=0) # required
+    # discount multiplier (80% price = 0.8)
+    discount = models.DecimalField(blank=True, default=1, max_digits=5, decimal_places=2)
     # 1 for active. Only active products will be displayed to customers
-    active = models.IntegerField(default=0)
+    active = models.IntegerField(blank=True, default=0)
 
 # Store table: Order
 # Contains order ID and timestamp of order.
@@ -89,6 +92,7 @@ class Order(models.Model):
     # each order ID corresponds to a paid shopping cart group
     ord_id = models.AutoField(primary_key=True)
     cust = models.ForeignKey(Customer)
+    total_sale = models.DecimalField(max_digits=6, decimal_places=2)
     # note, order creation is done only by cloud after payment confirmed
     time = models.DateTimeField(auto_now_add=True)
 
