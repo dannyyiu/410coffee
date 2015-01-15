@@ -1,0 +1,3 @@
+git rm -r --cached ..
+gir add ..
+git commit -m ".gitignore refresh [AUTOMATED]"
