@@ -30,7 +30,8 @@ def get_menu(fname):
         for line in r.readlines():
             details = {} # product details
             # Parse useful info
-            line = line.strip().split("|")
+            # Must use unicode for DB inserts
+            line = line.decode('utf-8').strip().split("|")
             name = line[0]
             op = line[2] # name of option
 
@@ -38,7 +39,7 @@ def get_menu(fname):
                 # Name already exist, update options only
                 # Calculate price difference for option
 
-                op_price = str(
+                op_price = unicode(
                     float(line[3]) - float(out[name]['base_price']))
                 out[name]['options'][op] = op_price
 
@@ -50,10 +51,10 @@ def get_menu(fname):
                 details['cat'] = line[1]
                 details['img'] = line[4]
                 details['desc'] = line[5]
-                options[op] = 0 # default price is 0
+                options[op] = unicode(0) # default price is 0
                 details['options'] = options
                 out[name] = details
-    #pprint(out)
+    ###print out
     return out
 
 def get_stores(fname):
@@ -70,7 +71,7 @@ def get_stores(fname):
     with open(fname, 'r') as r:
         for line in r.readlines():
             details = {}
-            line = line.strip().split("|")
+            line = line.strip().decode('utf-8').split("|")
             details['desc'] = line[1]
             details['phone'] = line[2]
             out[line[0]] = details
@@ -93,7 +94,7 @@ def get_cust(fname):
     with open(fname, 'r') as r:
         for line in r.readlines():
             details = {}
-            line = line.strip().split("|")
+            line = line.decode('utf-8').strip().split("|")
             details['fname'] = line[0]
             details['lname'] = line[1]
             details['passhash'] = line[3]
@@ -150,7 +151,7 @@ def populate_db(fname, menu, stores, cust):
     )
     conn.commit()
 
-    # Parse category data
+    # Parse and insert category data
     # Note: converted to set first for unique elements only
     cat_qdata = [(cat,) for cat in {menu[name]['cat'] for name in menu}]
     cur.executemany(
@@ -170,14 +171,40 @@ def populate_db(fname, menu, stores, cust):
         )
         for name in menu
     ]
-    pprint(menu_qdata)
 
+    # Insert menu data
+    cur.executemany(
+        '''insert or ignore into Menu 
+           (prod_name, cat_id, img_path, price, desc) values (?,?,?,?,?)''',
+           menu_qdata
+    )
+    conn.commit()
+
+    # Parse and insert option data
+    op_qdata = [
+        [
+            (
+                get_prod_id(fname, name), 
+                op, 
+                menu[name]['options'][op]
+            ) 
+            for op in menu[name]['options']
+        ] 
+        for name in menu
+    ]
+    op_qdata = [inner for outer in op_qdata for inner in outer] # combine
+    cur.executemany(
+        '''insert into Option (prod_id, op_name, price) values
+           (?, ?, ?)''',
+           op_qdata
+    )
+    conn.commit()
 
     conn.close()
 
 def get_cat_id(fname, cat_name):
     """
-    Return category name given category ID.
+    Return category id given category name.
     Helper function.
     """
     conn = sqlite3.connect(fname)
@@ -186,6 +213,16 @@ def get_cat_id(fname, cat_name):
     cat_id = int(cur.fetchone()[0])
     return cat_id
 
+def get_prod_id(fname, prod_name):
+    """
+    Return product id given product name.
+    Helper function.
+    """
+    conn = sqlite3.connect(fname)
+    cur = conn.cursor()
+    cur.execute("select prod_id from Menu where prod_name=?", (prod_name,))
+    prod_id = int(cur.fetchone()[0])
+    return prod_id
 
 if __name__ == '__main__':
     db_file = "db.sqlite3"

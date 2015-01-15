@@ -9,13 +9,13 @@ class Photo(models.Model):
 # Global tables
 ##############################
 
-# Note: all global table names must be kept static
+# Note: all global table names must be kept static (using Meta override)
 
 # Franchise table: Stores
 # Contains store information such as name, description, and active status
 class Stores(models.Model):
     store_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=250, unique=True) # required
+    name = models.CharField(max_length=250, unique=True) # Required
     desc = models.TextField(blank=True, default='')
     phone = models.CharField(blank=True, default='', max_length=12)
     active = models.IntegerField(blank=True, default=0)
@@ -27,7 +27,7 @@ class Stores(models.Model):
 # Contains all possible categories for menu items
 class Category(models.Model):
     cat_id = models.AutoField(primary_key=True)
-    cat_name = models.CharField(max_length=250, unique=True)
+    cat_name = models.CharField(max_length=250, unique=True) # Required
 
     class Meta:
         db_table = "Category"
@@ -36,11 +36,11 @@ class Category(models.Model):
 # Contains all menu products and their respective categories
 class Menu(models.Model):
     prod_id = models.AutoField(primary_key=True)
-    prod_name = models.CharField(max_length=200, unique=True) # required
-    cat = models.ForeignKey(Category)
+    prod_name = models.CharField(max_length=200, unique=True) # Required
+    cat = models.ForeignKey(Category) # Required
     #op = models.ManyToManyField(Option)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    img_path = models.CharField(blank=True, default='', max_length=300) # path to image file
+    price = models.DecimalField(max_digits=6, decimal_places=2) # Required
+    img_path = models.CharField(blank=True, default='', max_length=300) # Path to image file
     desc = models.CharField(blank=True, default='', max_length=500)
 
     class Meta:
@@ -50,21 +50,24 @@ class Menu(models.Model):
 # Contains all possible options for menu items
 class Option(models.Model):
     op_id = models.AutoField(primary_key=True)
-    prod = models.ForeignKey(Menu)
+    prod = models.ForeignKey(Menu) # Required
+    # Note: op_name can be blank for cases where there really are no options
     op_name = models.CharField(blank=True, default='', max_length=250)
     price = models.DecimalField(blank=True, default=0, max_digits=6, decimal_places=2)
 
     class Meta:
         db_table = "Option"
+        unique_together = ["prod", "op_name"]
 
 # Customer Table: Customer
 # Contains customer information
 class Customer(models.Model):
     cust_id = models.AutoField(primary_key=True)
-    fname = models.CharField(max_length=100)
-    lname = models.CharField(max_length=100)
-    email = models.CharField(max_length=254, unique=True)
-    passhash = models.CharField(max_length=128) # bcrypt max 76, sha256 max 64, sha512 max 128
+    fname = models.CharField(max_length=100) # Required
+    lname = models.CharField(max_length=100) # Required
+    email = models.CharField(max_length=254, unique=True) # Required, used as user login
+    # Encryption lengths: bcrypt max 76, sha256 max 64, sha512 max 128
+    passhash = models.CharField(max_length=128) # Required
     store = models.ForeignKey(Stores, blank=True, null=True)
 
     class Meta:
