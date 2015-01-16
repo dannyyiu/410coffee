@@ -1,7 +1,10 @@
 <html>
 <body>
-html renderer
-{{ data }}
-{{ store_name }}
+{% for inv_row in inventory %}
+<div>
+{{ inv_row.prod.prod_name}}
+</div>
+{% endfor %}
+
 </body>
 </html>

@@ -83,7 +83,7 @@ class Customer(models.Model):
 # Store table: Inventory
 # Contains product stock levels, price and active status
 class Inventory(models.Model):
-    prod = models.ForeignKey(Menu)
+    prod = models.ForeignKey(Menu, unique=True)
     stock = models.IntegerField(blank=True, default=0) # required
     # discount multiplier (80% price = 0.8)
     discount = models.DecimalField(blank=True, default=1, max_digits=5, decimal_places=2)

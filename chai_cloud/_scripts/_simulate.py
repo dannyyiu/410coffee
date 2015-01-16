@@ -10,23 +10,25 @@ def populate_inventory(fname, release=False):
     conn = sqlite3.connect(fname)
     cur = conn.cursor()
 
-    # Get all store IDs
-    cur.execute('''select store_id from Stores''')
+    # Get all store info; Dynamic for production, static for testing.
     if release:
-        store_ids = [i[0] for i in cur.fetchall()] # List of store IDs
+        query = "select store_id, name from Stores"
     else:
-        
-    cur.execute('''select cat_id, cat_name from Category''')
+        query = "select store_id, name from Stores where name='api'"
+    cur.execute(query)
+    stores = dict(cur.fetchall())
+
     # Get all categories {int: str}
+    cur.execute('''select cat_id, cat_name from Category''')
+
     categories = dict(cur.fetchall())
 
     # Get customer IDs (for orders)
     cur.execute('''select cust_id from Customer''')
     customers = [i[0] for i in cur.fetchall()]
     #print customers
-    
-    for store_id in store_ids:
-
+    for store_id in stores:
+        print "[DEBUG] Generating inventory for %s..." % stores[store_id]
         # Generate random menu for each store
         # At least one of every category, 50%-100% of Menu for each
         # 50%-100% of options for each menu item.
@@ -48,14 +50,32 @@ def populate_inventory(fname, release=False):
             stock = random.randint(200,1000) # random inventory stock
             active = 1
             discount = 1.0
-            insert_list += (prod_id, stock, discount, active,)
+            insert_list += [(prod_id, stock, discount, active,)]
+        print "[DEBUG] Inventory generated successfully."
+        store_db_insert(fname, stores[store_id], "inventory", insert_list)
 
 
-def store_db_insert(table, data):
+def store_db_insert(dbname, store_prefix, table, data):
+    """
+    Insert into dynamic store tables, given store name and table type.
+    Data must be a list of tuples for insert.
+    """
 
     table_name = "%s_%s" % (store_prefix, table)
+    conn = sqlite3.connect(dbname)
+    cur = conn.cursor()
     if table == "inventory":
-        query = """insert
+        query = "insert or ignore into %s (prod_id, stock," % table_name + \
+                " discount, active) values (?, ?, ?, ?)"
+        print "[DEBUG] Inserting data into table %s..." % table_name
+        cur.executemany(query, data)
+        conn.commit()
+        print "[DEBUG] Inventory inserted successfully."
+        
+    elif table == "order":
+        query = "insert into %s (cust_id, " % table_name + \
+                "total_sale, time) values (?, ?, ?)"
+        
 
 
 
