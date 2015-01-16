@@ -20,7 +20,7 @@ def generate_customers(filename, no=500):
     """
     # Get a full list of names from name DB
     dummy_names = []
-    with open('raw-data/fullnames.dat', 'r') as r:
+    with open('raw-data/fullnames.data', 'r') as r:
         raw = r.readlines()
     for line in raw:
         line = line.strip()
