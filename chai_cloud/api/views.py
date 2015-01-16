@@ -23,9 +23,11 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 class DevViewSet(viewsets.ViewSet):
     model = Stores
-    def list(self, request):
+    def list(self, request, *args, **kwargs):
+        store_name = kwargs['store_name']
         queryset = Stores.objects.all()
-        html_data = {'data': queryset}
+        html_data = {'data': queryset,
+                     'store_name': kwargs['store_name']}
         #serializer = StoresSerializer(queryset, many=True)
         #return Response(serializer.data)
         return Response(html_data, template_name='stores.html')
@@ -35,4 +37,6 @@ class DevViewSet(viewsets.ViewSet):
 # Register the viewset
 api_router = routers.DefaultRouter()
 api_router.register(r'k/photo', PhotoViewSet)
-api_router.register(r'stores', DevViewSet)
+api_router.register(r'store-(?P<store_name>[a-zA-Z]+)', DevViewSet) # default page
+api_router.register(r'inventory', DevViewSet)
+api_router.register(r'order', DevViewSet)

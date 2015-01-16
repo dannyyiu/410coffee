@@ -9,6 +9,48 @@
 
 import sqlite3
 from pprint import pprint # For testing
+import random # for random populating per store
+from math import ceil
+
+
+def generate_customers(filename, no=500):
+    """
+    Generate dummy customers for testing.
+    Using name DB for random names.
+    """
+    # Get a full list of names from name DB
+    dummy_names = []
+    with open('fullnames.dat', 'r') as r:
+        raw = r.readlines()
+    for line in raw:
+        line = line.strip()
+        if "&" not in line and \
+                len(line.split(" ")) > 2 and \
+                "." not in line.split(" ")[0] and \
+                "-" not in line and \
+                len(line.split(" ")[-1]) > 3:
+            dummy_names.append(line.strip())
+
+    # Get a subset of random names (500 by default)
+    random_names = [ 
+        dummy_names[i] 
+        for i in random.sample(range(0, len(dummy_names)-1), no)
+    ]
+    for name in random_names:
+        [fname, lname] = name.rsplit(" ", 1)
+        email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
+        passw = name.replace(".", "").replace(" ", "")
+    
+    # Write it all in a data file
+    with open(filename, 'w') as w:
+        out = ""
+        for name in random_names:
+            [fname, lname] = name.rsplit(" ", 1)
+            email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
+            passw = name.replace(".", "").replace(" ", "")
+            out += "%s|\n" % "|".join([fname, lname, email, passw])
+        w.write(out)
+
 
 def get_menu(fname):
     """
@@ -194,7 +236,7 @@ def populate_db(fname, menu, stores, cust):
     ]
     op_qdata = [inner for outer in op_qdata for inner in outer] # combine
     cur.executemany(
-        '''insert into Option (prod_id, op_name, price) values
+        '''insert or ignore into Option (prod_id, op_name, price) values
            (?, ?, ?)''',
            op_qdata
     )
@@ -224,11 +266,50 @@ def get_prod_id(fname, prod_name):
     prod_id = int(cur.fetchone()[0])
     return prod_id
 
+def populate_stores(fname):
+    """
+    Populate all stores with some random menu items, random orders.
+    """
+    conn = sqlite3.connect(fname)
+    cur = conn.cursor()
+
+    # Get all store IDs
+    cur.execute('''select store_id from Stores''')
+    store_ids = [i[0] for i in cur.fetchall()] # List of store IDs
+    cur.execute('''select cat_id, cat_name from Category''')
+    # Get all categories {int: str}
+    categories = dict(cur.fetchall())
+    # Get all prod IDs and base price from menu {str:float}
+    cur.execute('''select prod_name, price from Menu''')
+    menu = dict(cur.fetchall())
+    # Get customer IDs (for orders)
+    cur.execute('''select cust_id from Customer''')
+    customers = [i[0] for i in cur.fetchall()]
+    #print customers
+    
+    for store_id in store_ids:
+        # Generate random menu for each store
+        # All categories, 70%-100% of Menu for each
+        # 50%-100% of options for each menu item.
+        pass
+
+
 if __name__ == '__main__':
     db_file = "db.sqlite3"
     # db_file = "../db.sqlite3"  # Uncomment this line to use on the main DB file
+
+    # Generate random customer names (default 500)
+    generate_customers('cust.data')
+
+    # Get retrieve data for DB inserts
     menu = get_menu('menu.data')
     stores = get_stores('stores.data')
     cust = get_cust('cust.data')
+
+    # Populate all static tables
     populate_db(db_file, menu, stores, cust)
+
+    # Populate all dynamic tables (tables for each store)
+    populate_stores('db.sqlite3')
+
 
