@@ -90,6 +90,7 @@ class Inventory(models.Model):
     # 1 for active. Only active products will be displayed to customers
     active = models.IntegerField(blank=True, default=0)
 
+
 # Store table: Order
 # Contains order ID and timestamp of order.
 class Order(models.Model):
@@ -104,6 +105,7 @@ class Order(models.Model):
 # Contains all items details corresponding to an order ID
 class OrderDetail(models.Model):
     ord = models.ForeignKey(Order)
-    prod = models.ForeignKey(Inventory)
+    prod = models.ForeignKey(Menu)
+    op = models.ForeignKey(Option)
 
 

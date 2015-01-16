@@ -318,7 +318,7 @@ if __name__ == '__main__':
 
     # Generate random customer names (default 500)
     generate_customers('raw-data/cust.data')
-    generate_stores('raw-data/stores.data')
+    #generate_stores('raw-data/stores.data')
 
     # Get retrieve data for DB inserts
     menu = get_menu('raw-data/menu.data')
