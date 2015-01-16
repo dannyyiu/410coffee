@@ -3,4 +3,4 @@ rm db.sqlite3
 ../manage.py syncdb --noinput
 cp ../db.sqlite3 .
 ./_populate_db.py
-
+cp db.sqlite3 ../

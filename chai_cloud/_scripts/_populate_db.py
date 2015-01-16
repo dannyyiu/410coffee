@@ -20,7 +20,7 @@ def generate_customers(filename, no=500):
     """
     # Get a full list of names from name DB
     dummy_names = []
-    with open('fullnames.dat', 'r') as r:
+    with open('raw-data/fullnames.dat', 'r') as r:
         raw = r.readlines()
     for line in raw:
         line = line.strip()
@@ -49,6 +49,51 @@ def generate_customers(filename, no=500):
             email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
             passw = name.replace(".", "").replace(" ", "")
             out += "%s|\n" % "|".join([fname, lname, email, passw])
+        w.write(out)
+
+def generate_stores(filename, no=20):
+    """
+    Generate stores from file containing Tim Hortons addresses.
+    """
+    addresses = set()
+    with open('raw-data/timmies_urbanspoon_raw', 'r') as r:
+        raw = r.readlines()
+
+    for line in raw:
+        if line[0] == "$": # line with address inside
+            # find index of number
+            address_index = None
+            for i, c in enumerate(line):
+                if c.isdigit():
+                    address_index = i
+                    break
+            # get address
+            if address_index:
+                address = line[address_index:]
+                addresses.add(
+                    address.strip().replace(
+                        " West", " W").replace(
+                        " East", " E").replace(
+                        " Drive", " Dr").replace(
+                        " Road", " Rd").replace(
+                        " Street", " St").replace(
+                        " Boulevard", " Blvd").replace(
+                        " Avenue", " Ave").replace(
+                        " Ave Rd", " Avenue Rd").rsplit(",", 1)[0]
+                )
+    addresses = list(addresses)
+    random_addresses = [
+        addresses[i]
+        for i in random.sample(range(0, len(addresses)-1), no)
+    ]
+
+    with open(filename, 'w') as w:
+        out = ""
+        for address in random_addresses:
+            address = address.title().strip()
+            phone = "(416) 218-9039" # dummy number
+            name = "_".join(address.lower().split(" "))
+            out += "%s\n" % "|".join([name, address, phone])
         w.write(out)
 
 
@@ -266,50 +311,22 @@ def get_prod_id(fname, prod_name):
     prod_id = int(cur.fetchone()[0])
     return prod_id
 
-def populate_stores(fname):
-    """
-    Populate all stores with some random menu items, random orders.
-    """
-    conn = sqlite3.connect(fname)
-    cur = conn.cursor()
-
-    # Get all store IDs
-    cur.execute('''select store_id from Stores''')
-    store_ids = [i[0] for i in cur.fetchall()] # List of store IDs
-    cur.execute('''select cat_id, cat_name from Category''')
-    # Get all categories {int: str}
-    categories = dict(cur.fetchall())
-    # Get all prod IDs and base price from menu {str:float}
-    cur.execute('''select prod_name, price from Menu''')
-    menu = dict(cur.fetchall())
-    # Get customer IDs (for orders)
-    cur.execute('''select cust_id from Customer''')
-    customers = [i[0] for i in cur.fetchall()]
-    #print customers
-    
-    for store_id in store_ids:
-        # Generate random menu for each store
-        # All categories, 70%-100% of Menu for each
-        # 50%-100% of options for each menu item.
-        pass
-
 
 if __name__ == '__main__':
     db_file = "db.sqlite3"
     # db_file = "../db.sqlite3"  # Uncomment this line to use on the main DB file
 
     # Generate random customer names (default 500)
-    generate_customers('cust.data')
+    generate_customers('raw-data/cust.data')
+    generate_stores('raw-data/stores.data')
 
     # Get retrieve data for DB inserts
-    menu = get_menu('menu.data')
-    stores = get_stores('stores.data')
-    cust = get_cust('cust.data')
+    menu = get_menu('raw-data/menu.data')
+    stores = get_stores('raw-data/stores.data')
+    cust = get_cust('raw-data/cust.data')
 
     # Populate all static tables
     populate_db(db_file, menu, stores, cust)
 
-    # Populate all dynamic tables (tables for each store)
-    populate_stores('db.sqlite3')
 
 
