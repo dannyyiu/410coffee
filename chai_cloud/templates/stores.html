@@ -1,8 +1,15 @@
-{% load add_float %}
+{% load custom_filters %}
 <html>
 
   <head>
     <title> Storefront </title>
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    </style>
   </head>
 
   <body>
@@ -21,27 +28,29 @@
           <th>Stock</th>
           <th>Discount</th>
           <th>Options</th>
-          <th>Price</th>
+          <th>Final Price</th>
         </thead>
         {% for inv_row in inventory %}
         <tr>
           {% with options=inv_row.prod.option_set.all %}
           {% with rowspan=options|length %}
-          rspan "{{ options.0.op_name }}"
           <td rowspan="{{ rowspan }}">{{ inv_row.active }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.prod_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.cat.cat_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td>
-          <td rowspan="{{ rowspan }}">{{ inv_row.discount }}</td>
+          <td rowspan="{{ rowspan }}">{{ inv_row.discount|floatformat:2 }}</td>
           <td>{{ options.0.op_name }}</td>
 
-          <td>price {{ inv_row.prod.price|add_float:options.0.price }}</td>
-          {% for option in options %}
-          <td>{{ option.op_name }}</td>
-          {% endfor %}
-          {% endwith %}
-          {% endwith %}
+          <td>{{ inv_row.prod.price|add_float:options.0.price }}</td>
         </tr>
+        {% for option in options|slice:"1:" %}
+        <tr>
+          <td>{{ option.op_name }}</td>
+          <td>{{ inv_row.prod.price|add_float:options.0.price|mul_float:inv_row.discount }}
+        </tr>
+        {% endfor %}
+          {% endwith %}
+          {% endwith %}
         {% endfor %}
       </table>
     </div>
