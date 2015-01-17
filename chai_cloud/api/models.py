@@ -107,5 +107,6 @@ class OrderDetail(models.Model):
     ord = models.ForeignKey(Order)
     prod = models.ForeignKey(Menu)
     op = models.ForeignKey(Option)
+    active = models.IntegerField(blank=True, default=1)
 
 

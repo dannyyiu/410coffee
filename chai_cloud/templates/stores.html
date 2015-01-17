@@ -18,8 +18,45 @@
       <h2>Storefront for {{ store_name }}</h2>
     </div> 
 
+    <!--======= Order table =======-->
+    <div id="orderlist">
+      <h3>Current Orders</h3>
+      <table>
+        <thead>
+          <th>Order ID</th>
+          <th>Customer (ID)</th>
+          <th>Order Time</th>
+          <th>Product</th>
+          <th>Status</th>
+        </thead>
+      </table>
+      {% for order in orders %}
+      {% with details=order.orderdetail_set.all %}
+      {% with rowspan=details.length %}
+        <tr>
+          <td rowspan="{{ rowspan }}">{{ order.ord_id }}</td>
+          <td rowspan="{{ rowspan }}">{{ order.cust.fname }} {{ order.cust.lname }} ({{ order.cust_id }})</td>
+          <td rowspan="{{ rowspan }}">{{ order.time }}</td>
+          <td>{{ details.0.prod.prod_name }}</td>
+          <td>{{ details.all.0.status }} <input type="submit" value="Complete" name="complete_order" /></td>
+        </tr>
+      <!-- additional details start -->
+      {% for detail in details|slice:"1:" %}
+        <tr>
+          <td>{{ detail.prod.prod_name }}</td>
+          <td>{{ detail.status }}</td>
+        </tr>
+      {% endfor %}
+      <!-- additional details end -->
+
+      {% endwith %} <!-- details -->
+      {% endwith %}
+      {% endfor %}
+    </div>
+    <!--======== Order table end ======= -->
+    <!--======== Inventory table ======= -->
     <div id="inventory">
-      <h3>Inventory</h3>
+      <h3>Inventory Table</h3>
       <table>
         <thead align="left">
           <th>Active</th>
@@ -30,30 +67,35 @@
           <th>Options</th>
           <th>Final Price</th>
         </thead>
+
         {% for inv_row in inventory %}
         <tr>
-          {% with options=inv_row.prod.option_set.all %}
-          {% with rowspan=options|length %}
-          <td rowspan="{{ rowspan }}">{{ inv_row.active }}</td>
+        {% with options=inv_row.prod.option_set.all %}
+        {% with rowspan=options|length %}
+          <td rowspan="{{ rowspan }}">{{ inv_row.active }} <input type="submit" value="Toggle" name="toggle_active" /></td>
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.prod_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.cat.cat_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.discount|floatformat:2 }}</td>
           <td>{{ options.0.op_name }}</td>
+          <td>{{ inv_row.prod.price|add_float:options.0.price|mul_float:inv_row.discount }}</td>
 
-          <td>{{ inv_row.prod.price|add_float:options.0.price }}</td>
         </tr>
+
+        <!-- additional options start -->
         {% for option in options|slice:"1:" %}
         <tr>
           <td>{{ option.op_name }}</td>
           <td>{{ inv_row.prod.price|add_float:options.0.price|mul_float:inv_row.discount }}
         </tr>
         {% endfor %}
-          {% endwith %}
-          {% endwith %}
+        <!-- additional options end -->
+        {% endwith %}
+        {% endwith %}
         {% endfor %}
       </table>
     </div>
+    <!-- ======= Inventory table end ====== -->
   </body>
   
 </html>

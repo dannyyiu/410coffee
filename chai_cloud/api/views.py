@@ -28,11 +28,11 @@ class DevViewSet(viewsets.ViewSet):
         store_name = kwargs['store_name']
         queryset = Stores.objects.all()
         inventory = Inventory.objects.all()
-        orderdetail = OrderDetail.objects.all()
+        orders = Order.objects.all()
 
         html_data = {'data': queryset,
                      'inventory': inventory,
-                     'orderdetail': orderdetail,
+                     'orders': orders,
                      'store_name': kwargs['store_name']}
         #serializer = StoresSerializer(queryset, many=True)
         #return Response(serializer.data)
