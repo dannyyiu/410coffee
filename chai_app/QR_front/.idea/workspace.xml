@@ -57,8 +57,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/centennial/QR_front/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15567282" vertical-offset="468" max-vertical-offset="1605">
-              <caret line="43" column="25" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.5514512" vertical-offset="468" max-vertical-offset="1605">
+              <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -890,8 +890,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/centennial/QR_front/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15567282" vertical-offset="468" max-vertical-offset="1605">
-          <caret line="43" column="25" selection-start-line="43" selection-start-column="16" selection-end-line="43" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.5514512" vertical-offset="468" max-vertical-offset="1605">
+          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
