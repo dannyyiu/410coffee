@@ -1,10 +1,50 @@
+{% load add_float %}
 <html>
-<body>
-{% for inv_row in inventory %}
-<div>
-{{ inv_row.prod.prod_name}}
-</div>
-{% endfor %}
 
-</body>
+  <head>
+    <title> Storefront </title>
+  </head>
+
+  <body>
+
+    <div id="header_block">
+      <h2>Storefront for {{ store_name }}</h2>
+    </div> 
+
+    <div id="inventory">
+      <h3>Inventory</h3>
+      <table>
+        <thead align="left">
+          <th>Active</th>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Stock</th>
+          <th>Discount</th>
+          <th>Options</th>
+          <th>Price</th>
+        </thead>
+        {% for inv_row in inventory %}
+        <tr>
+          {% with options=inv_row.prod.option_set.all %}
+          {% with rowspan=options|length %}
+          rspan "{{ options.0.op_name }}"
+          <td rowspan="{{ rowspan }}">{{ inv_row.active }}</td>
+          <td rowspan="{{ rowspan }}">{{ inv_row.prod.prod_name }}</td>
+          <td rowspan="{{ rowspan }}">{{ inv_row.prod.cat.cat_name }}</td>
+          <td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td>
+          <td rowspan="{{ rowspan }}">{{ inv_row.discount }}</td>
+          <td>{{ options.0.op_name }}</td>
+
+          <td>price {{ inv_row.prod.price|add_float:options.0.price }}</td>
+          {% for option in options %}
+          <td>{{ option.op_name }}</td>
+          {% endfor %}
+          {% endwith %}
+          {% endwith %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+  
 </html>

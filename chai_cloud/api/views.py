@@ -23,16 +23,15 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 class DevViewSet(viewsets.ViewSet):
     model = Stores
+
     def list(self, request, *args, **kwargs):
         store_name = kwargs['store_name']
         queryset = Stores.objects.all()
         inventory = Inventory.objects.all()
-        order = Order.objects.all()
         orderdetail = OrderDetail.objects.all()
 
         html_data = {'data': queryset,
                      'inventory': inventory,
-                     'order':order,
                      'orderdetail': orderdetail,
                      'store_name': kwargs['store_name']}
         #serializer = StoresSerializer(queryset, many=True)
