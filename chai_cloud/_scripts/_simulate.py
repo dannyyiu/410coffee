@@ -12,9 +12,9 @@ def populate_inventory(fname, release=False):
 
     # Get all store info; Dynamic for production, static for testing.
     if release:
-        query = "select store_id, name from Stores"
+        query = "select store_id, name from Store"
     else:
-        query = "select store_id, name from Stores where name='api'"
+        query = "select store_id, name from Store where name='api'"
     cur.execute(query)
     stores = dict(cur.fetchall())
 

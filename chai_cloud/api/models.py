@@ -11,9 +11,9 @@ class Photo(models.Model):
 
 # Note: all global table names must be kept static (using Meta override)
 
-# Franchise table: Stores
+# Franchise table: Store
 # Contains store information such as name, description, and active status
-class Stores(models.Model):
+class Store(models.Model):
     store_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250, unique=True) # Required
     desc = models.TextField(blank=True, default='')
@@ -21,7 +21,7 @@ class Stores(models.Model):
     active = models.IntegerField(blank=True, default=0)
     
     class Meta:
-        db_table = "Stores" 
+        db_table = "Store" 
 
 # Franchise table: Category
 # Contains all possible categories for menu items
@@ -68,7 +68,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=254, unique=True) # Required, used as user login
     # Encryption lengths: bcrypt max 76, sha256 max 64, sha512 max 128
     passhash = models.CharField(max_length=128) # Required
-    store = models.ForeignKey(Stores, blank=True, null=True)
+    store = models.ForeignKey(Store, blank=True, null=True)
 
     class Meta:
         db_table = "Customer"
@@ -83,12 +83,17 @@ class Customer(models.Model):
 # Store table: Inventory
 # Contains product stock levels, price and active status
 class Inventory(models.Model):
-    prod = models.ForeignKey(Menu, unique=True)
+    prod = models.ForeignKey(Menu)
+    store = models.ForeignKey(Store)
     stock = models.IntegerField(blank=True, default=0) # required
     # discount multiplier (80% price = 0.8)
     discount = models.DecimalField(blank=True, default=1, max_digits=5, decimal_places=2)
     # 1 for active. Only active products will be displayed to customers
     active = models.IntegerField(blank=True, default=0)
+
+    class Meta:
+        db_table = "Inventory"
+        unique_together = ["prod", "store"]
 
 
 # Store table: Order

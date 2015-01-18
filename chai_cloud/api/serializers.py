@@ -1,13 +1,13 @@
 from django.forms import widgets
 from rest_framework import serializers
-from api.models import Photo, Stores
+from api.models import Photo, Store
 
 class APISerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = ('path', 'title')
 
-class StoresSerializer(serializers.ModelSerializer):
+class StoreSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stores
+        model = Store
         fields = ('store_id', 'name', 'desc', 'phone', 'active')

@@ -1,6 +1,6 @@
 from rest_framework import viewsets, routers
 from api.models import *
-from api.serializers import APISerializer, StoresSerializer
+from api.serializers import APISerializer, StoreSerializer
 
 from rest_framework.response import Response 
 
@@ -22,11 +22,11 @@ class PhotoViewSet(viewsets.ModelViewSet):
         return Response({"error": str(request.user)})
 
 class DevViewSet(viewsets.ViewSet):
-    model = Stores
+    model = Store
 
     def list(self, request, *args, **kwargs):
         store_name = kwargs['store_name']
-        queryset = Stores.objects.all()
+        queryset = Store.objects.all()
         inventory = Inventory.objects.all()
         orders = Order.objects.all()
 
@@ -34,7 +34,7 @@ class DevViewSet(viewsets.ViewSet):
                      'inventory': inventory,
                      'orders': orders,
                      'store_name': kwargs['store_name']}
-        #serializer = StoresSerializer(queryset, many=True)
+        #serializer = StoreSerializer(queryset, many=True)
         #return Response(serializer.data)
         return Response(html_data, template_name='stores.html')
 

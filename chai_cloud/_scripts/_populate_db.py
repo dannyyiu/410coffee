@@ -212,7 +212,7 @@ def populate_db(fname, menu, stores, cust):
 
     # Insert store data
     cur.executemany(
-        '''insert or ignore into Stores 
+        '''insert or ignore into Store 
            (name, desc, phone, active) values (?, ?, ?, ?)''', 
         store_qdata
     )
