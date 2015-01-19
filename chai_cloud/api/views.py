@@ -21,7 +21,7 @@ class PhotoViewSet(viewsets.ModelViewSet):
             return Response({"user": str(request.user)})
         return Response({"error": str(request.user)})
 
-class DevViewSet(viewsets.ViewSet):
+class StoreViewSet(viewsets.ViewSet):
     model = Store
 
     def list(self, request, *args, **kwargs):
@@ -43,6 +43,6 @@ class DevViewSet(viewsets.ViewSet):
 # Register the viewset
 api_router = routers.DefaultRouter()
 api_router.register(r'k/photo', PhotoViewSet)
-api_router.register(r'store-(?P<store_name>[a-zA-Z]+)', DevViewSet) # default page
+api_router.register(r'store-(?P<store_name>[a-zA-Z]+)', StoreViewSet) # default page
 api_router.register(r'inventory', DevViewSet)
 api_router.register(r'order', DevViewSet)
