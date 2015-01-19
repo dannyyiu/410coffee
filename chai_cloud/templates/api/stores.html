@@ -72,7 +72,13 @@
         <tr>
         {% with options=inv_row.prod.option_set.all %}
         {% with rowspan=options|length %}
-          <td rowspan="{{ rowspan }}">{{ inv_row.active }} <input type="submit" value="Toggle" name="toggle_active" /></td>
+          {% with active=inv_row.active %}
+          {% if active %}
+          <td rowspan="{{ rowspan }}">{{ inv_row.active }} <form id="toggle_active_button" method="POST"><input type="hidden" name="prod_id" value="{{ inv_row.prod_id }}" /><input type="hidden" name="store_id" value="{{ inv_row.store_id }}" /><input type="submit" value="0" name="active" /></form></td>
+          {% else %}
+          <td rowspan="{{ rowspan }}">{{ inv_row.active }} <form id="toggle_active_button" method="POST"><input type="hidden" name="prod_id" value="{{ inv_row.prod_id }}" /><input type="hidden" name="store_id" value="{{ inv_row.store_id }}" /><input type="submit" value="1" name="active" /></form></td>
+          {% endif %}
+          {% endwith %}
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.prod_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.cat.cat_name }}</td>
           <td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td>

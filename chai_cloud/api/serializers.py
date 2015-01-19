@@ -1,6 +1,6 @@
 from django.forms import widgets
 from rest_framework import serializers
-from api.models import Photo, Store
+from api.models import *
 
 class APISerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,3 +11,7 @@ class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = ('store_id', 'name', 'desc', 'phone', 'active')
+class InventorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inventory
+        fields = ('active', 'prod', 'store')
