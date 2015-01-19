@@ -36,7 +36,7 @@ class DevViewSet(viewsets.ViewSet):
                      'store_name': kwargs['store_name']}
         #serializer = StoreSerializer(queryset, many=True)
         #return Response(serializer.data)
-        return Response(html_data, template_name='stores.html')
+        return Response(html_data, template_name='api/stores.html')
 
 
  

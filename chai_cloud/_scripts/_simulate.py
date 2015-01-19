@@ -50,24 +50,24 @@ def populate_inventory(fname, release=False):
             stock = random.randint(200,1000) # random inventory stock
             active = 1
             discount = 1.0
-            insert_list += [(prod_id, stock, discount, active,)]
+            insert_list += [(prod_id, stock, discount, active, store_id,)]
         print "[DEBUG] Inventory generated successfully."
-        store_db_insert(fname, stores[store_id], "inventory", insert_list)
+        store_db_insert(fname, "inventory", insert_list, stores[store_id])
 
 
-def store_db_insert(dbname, store_prefix, table, data):
+def store_db_insert(dbname, table, data, store_name):
     """
     Insert into dynamic store tables, given store name and table type.
     Data must be a list of tuples for insert.
     """
 
-    table_name = "%s_%s" % (store_prefix, table)
+    #table_name = "%s_%s" % (store_prefix, table)
     conn = sqlite3.connect(dbname)
     cur = conn.cursor()
     if table == "inventory":
-        query = "insert or ignore into %s (prod_id, stock," % table_name + \
-                " discount, active) values (?, ?, ?, ?)"
-        print "[DEBUG] Inserting data into table %s..." % table_name
+        query = "insert or ignore into Inventory (prod_id, stock," + \
+                " discount, active, store_id) values (?, ?, ?, ?, ?)"
+        print "[DEBUG] Inserting data into Inventory for %s..." % store_name
         cur.executemany(query, data)
         conn.commit()
         print "[DEBUG] Inventory inserted successfully."

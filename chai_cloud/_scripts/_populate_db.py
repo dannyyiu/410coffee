@@ -114,7 +114,8 @@ def get_menu(fname):
     """
     out = {}
     with open(fname, 'r') as r:
-        for line in r.readlines():
+        raw = r.readlines()
+        for line in raw:
             details = {} # product details
             # Parse useful info
             # Must use unicode for DB inserts
@@ -279,6 +280,11 @@ def populate_db(fname, menu, stores, cust):
         ] 
         for name in menu
     ]
+    # since option info is unordered from set, order before insert
+    for opset in op_qdata:
+        opset.sort(key=lambda x: x[2])
+    #pprint(op_qdata)
+
     op_qdata = [inner for outer in op_qdata for inner in outer] # combine
     cur.executemany(
         '''insert or ignore into Option (prod_id, op_name, price) values

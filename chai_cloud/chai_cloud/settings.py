@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -39,6 +38,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'mathfilters',
     'api',
+    'django.contrib.admin',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,9 +92,14 @@ USE_L10N = True
 USE_TZ = True
 
 # Templates
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
-)
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+#TEMPLATE_LOADERS = (
+#
+#    'django.template.loaders.filesystem.Loader',
+#    'django.template.loaders.app_directories.Loader',
+#
+#)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
