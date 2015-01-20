@@ -36,7 +36,7 @@ def random_order(store_name):
     )
     store_id = cur.fetchone()[0]
     cur.execute(
-        "select prod_id from Inventory where store_id=?",
+        "select prod_id from Inventory where active=1 and store_id=?",
         (store_id,)
     )
     prod_id_list = random.sample(
@@ -76,5 +76,6 @@ def order_batch(store_name, x=4):
     
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        order_batch(sys.argv[1])
-    random_order('api')
+        order_batch('api', int(sys.argv[1]))
+    else:
+        random_order('api')
