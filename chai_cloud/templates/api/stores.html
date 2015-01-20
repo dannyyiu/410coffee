@@ -15,7 +15,7 @@
   <body>
 
     <div id="header_block">
-      <h2>Storefront for {{ store_name }}</h2>
+      <h2>Storefront for {{ store_name }} (ID:{{ store_id }})</h2>
     </div> 
 
     <!--======= Order table =======-->
@@ -27,24 +27,43 @@
           <th>Customer (ID)</th>
           <th>Order Time</th>
           <th>Product</th>
+          <th>Option</th>
           <th>Status</th>
         </thead>
-      </table>
-      {% for order in orders %}
+
+      {% for order in current_orders %}
       {% with details=order.orderdetail_set.all %}
-      {% with rowspan=details.length %}
+      {% with rowspan=details|length %}
         <tr>
           <td rowspan="{{ rowspan }}">{{ order.ord_id }}</td>
           <td rowspan="{{ rowspan }}">{{ order.cust.fname }} {{ order.cust.lname }} ({{ order.cust_id }})</td>
           <td rowspan="{{ rowspan }}">{{ order.time }}</td>
+          {% if details.0.active %}
           <td>{{ details.0.prod.prod_name }}</td>
-          <td>{{ details.all.0.status }} <input type="submit" value="Complete" name="complete_order" /></td>
+          <td>{{ details.0.op.op_name }}</td>
+          <td><form id="complete_order" method="POST">
+          <input type="hidden" name="details_id" value="{{ details.0.id }}" />
+          <input type="submit" value="Complete" name="complete_order" />
+          </form></td>
+          {% else %}
+          <td></td>
+          <td></td>
+          {% endif %}
         </tr>
       <!-- Additional details start -->
       {% for detail in details|slice:"1:" %}
         <tr>
+          {% if detail.active %}
           <td>{{ detail.prod.prod_name }}</td>
-          <td>{{ detail.status }}</td>
+          <td>{{ detail.op.op_name }}</td>
+          <td><form id="complete_order" method="POST">
+          <input type="hidden" name="details_id" value="{{ detail.id }}" />
+          <input type="submit" value="Complete" name="complete_order" />
+          </form></td>
+          {% else %}
+          <td></td>
+          <td></td>
+          {% endif %}
         </tr>
       {% endfor %}
       <!-- Additional details end -->
@@ -52,6 +71,7 @@
       {% endwith %} <!-- rowspan variable end -->
       {% endwith %} <!-- details variable end -->
       {% endfor %}
+      </table>
     </div>
     <!--======== Order table end ======= -->
     <!--======== Inventory table ======= -->
@@ -103,14 +123,14 @@
           <!-- Discount -->
           <td rowspan="{{ rowspan }}">{{ inv_row.discount|floatformat:2 }}</td>
           <!-- Options (first row) -->
-          <td>{{ options.0.op_name }} {{ inv_row.prod.price }} {{ options.0.price }}</td> 
+          <td>{{ options.0.op_name }}</td> 
           <td>{{ inv_row.prod.price|add_float:options.0.price|mul_float:inv_row.discount }}</td>
         </tr>
 
         <!-- Additional options and price start -->
         {% for option in options|slice:"1:" %}
         <tr>
-          <td>{{ option.op_name }} {{ inv_row.prod.price }} {{ option.price }}</td>
+          <td>{{ option.op_name }}</td>
           <td>{{ inv_row.prod.price|add_float:option.price|mul_float:inv_row.discount }}
         </tr>
         {% endfor %}

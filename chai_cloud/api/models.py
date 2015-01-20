@@ -122,7 +122,7 @@ class Order(models.Model):
     store = models.ForeignKey(Store)
     cust = models.ForeignKey(Customer)
     # note, order creation is done only by cloud after payment confirmed
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField()
 
     class Meta:
         db_table = "Order"
