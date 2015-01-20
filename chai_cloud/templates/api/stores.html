@@ -40,7 +40,7 @@
           <td rowspan="{{ rowspan }}">{{ order.time }}</td>
           {% if details.0.active %}
           <td>{{ details.0.prod.prod_name }}</td>
-          <td>{{ details.0.op.op_name }}</td>
+          <td>{{ details.0.op.op_name|title }}</td>
           <td><form id="complete_order" method="POST">
           <input type="hidden" name="details_id" value="{{ details.0.id }}" />
           <input type="submit" value="Complete" name="complete_order" />
@@ -55,7 +55,7 @@
         <tr>
           {% if detail.active %}
           <td>{{ detail.prod.prod_name }}</td>
-          <td>{{ detail.op.op_name }}</td>
+          <td>{{ detail.op.op_name|title }}</td>
           <td><form id="complete_order" method="POST">
           <input type="hidden" name="details_id" value="{{ detail.id }}" />
           <input type="submit" value="Complete" name="complete_order" />
@@ -123,14 +123,14 @@
           <!-- Discount -->
           <td rowspan="{{ rowspan }}">{{ inv_row.discount|floatformat:2 }}</td>
           <!-- Options (first row) -->
-          <td>{{ options.0.op_name }}</td> 
+          <td>{{ options.0.op_name|title }}</td> 
           <td>{{ inv_row.prod.price|add_float:options.0.price|mul_float:inv_row.discount }}</td>
         </tr>
 
         <!-- Additional options and price start -->
         {% for option in options|slice:"1:" %}
         <tr>
-          <td>{{ option.op_name }}</td>
+          <td>{{ option.op_name|title }}</td>
           <td>{{ inv_row.prod.price|add_float:option.price|mul_float:inv_row.discount }}
         </tr>
         {% endfor %}

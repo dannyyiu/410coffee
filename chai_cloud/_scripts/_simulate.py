@@ -72,9 +72,6 @@ def store_db_insert(dbname, table, data, store_name):
         conn.commit()
         print "[DEBUG] Inventory inserted successfully."
         
-    elif table == "order":
-        query = "insert into %s (cust_id, " % table_name + \
-                "total_sale, time) values (?, ?, ?)"
         
 
 
