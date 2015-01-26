@@ -1,28 +1,25 @@
 {% load custom_filters %}
 {% load staticfiles %}
 <html>
-
   <head>
     <title> Storefront </title>
     <style>
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-    }
-
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
     </style>
-  </head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <!--script type="text/javascript" src="{% static "long_poll.js" %}"></script-->
     <script type="text/javascript" src="{% static "jquery.gracefulWebSocket.js" %}"></script>
     <script type="text/javascript">
     $(document).ready( function() {
+      // Define websocket
       window.socket = {};
       socket.ws = $.gracefulWebSocket("ws://localhost:1025/ws");
       socket.send = function (message) {
         socket.ws.send(message);
       }
-
       socket.ws.onmessage = function (event) {
         // Gets a WS request from Customer/Store
         var messageFromServer = event.data;
@@ -32,15 +29,18 @@
         if (parsed['action'] == "order") {
           var storename = parsed['store_name'];
           if (parsed['storename'] == '{{ store_name }}') {
+
             // Order info
             var orderid = parsed['orderid'];
             var customer = parsed['customer'];
             var custid = parsed['custid'];
             var ordertime = parsed['ordertime'];
             var orderlist = parsed['orderlist'];
+
             // HTML container
             var html_append = [];
             var rowspan = orderlist.length;
+
             // First order detail
             html_append.push('<td rowspan=' + rowspan + '">' + orderid + '</td>');
             html_append.push('<td rowspan="' + rowspan + '">' + customer +' (' + custid + ')</  td>');
@@ -60,6 +60,7 @@
               html_append.push('<td>' + orderlist[i]['prodname']);
               html_append.push('</td><td>' + orderlist[i]['op'] + '</td>');
               html_append.push('<td><form id="complete_order" method="POST"><input  type="hidden" name="details_id" value="' + orderlist[i]['opid'] + '" /><input type="submit"   value="Complete" name="complete_order" /></form></td>');
+
               // Write to current orders table
               var trappend = document.createElement('tr');
               trappend.innerHTML = html_append.join('');
@@ -68,9 +69,12 @@
           };
         };
 
+        /*
+        // List POST messages, for testing
         var list_element = document.createElement('li');
         list_element.innerHTML = messageFromServer;
         $("#message_list ul").prepend(list_element);
+        */
       };
 
       // All event elements
@@ -88,18 +92,21 @@
         }, false);
       };
       */
-
+      /* 
+      // Input field for testing
       inputbox.addEventListener("keydown", function(e) {
         if (!e) { var e = window.event; }
   
-        if (e.keyCode == 13) { 
-          e.preventDefault(); // sometimes useful
+        if (e.keyCode == 13) {  // enter key listener
+          e.preventDefault();
           socket.send(inputbox.value);  
           inputbox.value="";
         }
       }, false);
+      */
     });
     </script>
+  </head>
 
   <body>
     <!-- For testing websocket POST messages 
@@ -111,7 +118,7 @@
     -->
 
     <div id="header_block">
-      <h2>Storefront for {{ store_name }} (ID:{{ store_id }})</h2>
+      <h2>Storefront for "{{ store_name }}" (Store ID:{{ store_id }})</h2>
     </div>  
 
     <!--======= Order table =======-->
@@ -163,7 +170,6 @@
         </tr>
       {% endfor %}
       <!-- Additional details end -->
-
       {% endwith %} <!-- rowspan variable end -->
       {% endwith %} <!-- details variable end -->
       {% endfor %}
@@ -179,7 +185,7 @@
           <th>Status</th>
           <th>Product Name</th>
           <th>Category</th>
-          <th>Stock</th>
+          <!--th>Stock</th-->
           <th>Discount</th>
           <th>Options</th>
           <th>Final Price</th>
@@ -216,7 +222,7 @@
           <!-- Category -->
           <td rowspan="{{ rowspan }}">{{ inv_row.prod.cat.cat_name }}</td>
           <!-- Stock -->
-          <td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td> 
+          <!--td rowspan="{{ rowspan }}">{{ inv_row.stock }}</td--> 
           <!-- Discount -->
           <td rowspan="{{ rowspan }}">{{ inv_row.discount|floatformat:2 }}</td>
           <!-- Options (first row) -->
