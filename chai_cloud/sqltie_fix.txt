@@ -1,7 +1,0 @@
-DROP TABLE "Menu_op";
-CREATE TABLE "Menu_op" (
-    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "menu_id" integer NOT NULL REFERENCES "Menu" ("prod_id"),
-    "option_id" integer NOT NULL REFERENCES "Option" ("op_id"),
-    UNIQUE ("menu_id", "option_id")
-);

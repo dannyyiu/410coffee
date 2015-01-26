@@ -13,6 +13,9 @@ from api.serializers import APISerializer, StoreSerializer, InventorySerializer
 
 from forms import *
 
+from urllib2 import urlopen
+from urllib import urlencode
+
 class JSONResponse(HttpResponse):
     """ JSON rendered HTTP response. """
 
@@ -69,6 +72,7 @@ def store_view(request, store_name):
         if request.POST.get('complete_order'):
             form = CompleteOrder(request.POST)
             details_id = request.POST['details_id']
+            print "::::::", details_id
             selected = OrderDetail.objects.filter(id=details_id)
             selected.update(active=0)
             return HttpResponseRedirect('/store-%s' % store_name)
@@ -113,13 +117,14 @@ def customer_order(request):
                 cust_id=cust_id,
                 time=timezone.now()
             )
+            ord_id = order_create.ord_id
             #order_create.save()
 
             # Add order details to DB (individual products per order)
             # Create list of products models
             details_list = [
                 OrderDetail(
-                    ord_id=order_create.ord_id,
+                    ord_id=ord_id,
                     prod_id=int(details['prod_id']),
                     op_id=int(details['op_id']),
                     active=1
@@ -127,6 +132,38 @@ def customer_order(request):
             ]
             # Bulk insert
             details_create = OrderDetail.objects.bulk_create(details_list)
+
+            # Websocket update
+            order_list = ''
+            for detail in details_create:
+                order_list += '{"prodname":"%s", "op":"%s", "opid":%d}, ' % (
+                    detail.prod.prod_name, 
+                    detail.op.op_name.title(),
+                    OrderDetail.objects.get( # order detail id
+                        ord_id=detail.ord_id,
+                        prod_id=detail.prod_id,
+                        op_id=detail.op_id,
+                        active=1).id,
+                )
+
+            # list of orders formatted for output
+            order_list = "[%s]" % order_list[:-2] # get rid of trailing comma/space
+            # send websocket POST
+            post_str = "{\"action\":\"order\"," + \
+               " \"orderlist\":%s," % order_list + \
+               " \"storename\":\"%s" % request.POST['store_name'] + \
+               "\", \"customer\":\"%s %s\"," % (
+                    Customer.objects.get(
+                        email=response_data['email']).fname,
+                    Customer.objects.get(
+                        email=response_data['email']).lname) + \
+               " \"custid\":%d, " % cust_id + \
+               "\"ordertime\":\"%s\"," % \
+                    Order.objects.get(ord_id=ord_id).time.strftime(
+                    "%b. %d, %Y, %I:%M %p") + \
+               " \"orderid\":%d}" % ord_id
+            post_data = [('new_message', post_str),]
+            result = urlopen('http://localhost:1025', urlencode(post_data))
 
             return HttpResponse(json.dumps(response_data), 
                                 content_type="application/json")
