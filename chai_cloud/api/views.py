@@ -72,10 +72,11 @@ def store_view(request, store_name):
         if request.POST.get('complete_order'):
             form = CompleteOrder(request.POST)
             details_id = request.POST['details_id']
-            print "::::::", details_id
+            print "[DEBUG] Updating status to 0 for Order Detail ID:", details_id
             selected = OrderDetail.objects.filter(id=details_id)
             selected.update(active=0)
-            return HttpResponseRedirect('/store-%s' % store_name)
+            #return HttpResponseRedirect('/store-%s' % store_name) # for html views
+            return HttpResponse(json.dumps(details_id)) # for ajax calls
 
 
 ##########################
@@ -160,7 +161,7 @@ def customer_order(request):
                " \"custid\":%d, " % cust_id + \
                "\"ordertime\":\"%s\"," % \
                     Order.objects.get(ord_id=ord_id).time.strftime(
-                    "%b. %d, %Y, %I:%M %p") + \
+                    "%I:%M %p") + \
                " \"orderid\":%d}" % ord_id
             post_data = [('new_message', post_str),]
             result = urlopen('http://localhost:1025', urlencode(post_data))

@@ -59,7 +59,7 @@ class HttpStore(Resource):
             request.lastupdate = 0.0
  
         if request.lastupdate < 0:             
-            return self.__format_response(request, 1, "connected...", timestamp=0.0)         
+            return self.__format_response(request, 1, "\"Good\"", timestamp=0.0)         
  
         # Get the next message for this user
         data = self.getData(request)   
