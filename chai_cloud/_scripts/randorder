@@ -1,1 +1,1 @@
-http -f POST :8000/order/ order_list="[{'prod_id': 37, 'op_id':85}, {'prod_id': 41, 'op_id':94}, {'prod_id': 40, 'op_id':93}, ]" store_name=api email=Queen-Mother-Moore@chai.com
+http -f POST :8000/order/ order_list="[{'prod_id': 38, 'op_id':88}, {'prod_id': 9, 'op_id':22}, {'prod_id': 25, 'op_id':66}, {'prod_id': 37, 'op_id':87}, {'prod_id': 2, 'op_id':4}, ]" store_name=api email=Keith-Hamilton-Cobb@chai.com

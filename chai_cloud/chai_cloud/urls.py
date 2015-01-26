@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from api.views import store_view, customer_order
 from django.contrib import admin
+from django.views.generic import RedirectView
  
 urlpatterns = patterns(
     '', 

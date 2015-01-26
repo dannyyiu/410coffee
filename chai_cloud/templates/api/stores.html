@@ -85,6 +85,7 @@
               trappend.innerHTML = html_append.join('');
               $("#orderlist table").append(trappend);
             };
+
             // Complete button event
             for (var i=0; i<completeButton.length; i++) {
               completeButton[i].addEventListener('click', function(e){
@@ -281,7 +282,7 @@
           <tr class="first-row">
             <td class="rowsp" rowspan="{{ rowspan }}">{{ order.ord_id }}</td>
             <td class="rowsp" rowspan="{{ rowspan }}">{{ order.cust.fname }} {{ order.cust.lname }} <small>({{ order.cust_id }})</small></td>
-            <td class="rowsp" rowspan="{{ rowspan }}">{{ order.time|date:'g:i A' }}</td>
+            <td class="rowsp" rowspan="{{ rowspan }}">{{ order.time|date:'h:i A' }}</td>
             {% if details.0.active %}
             <td>{{ details.0.prod.prod_name }}</td>
             <td>{{ details.0.op.op_name|title }}</td>

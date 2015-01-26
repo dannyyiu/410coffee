@@ -3,7 +3,9 @@ from django.http import HttpResponse
 
 import json
 import ast # str to dict
+
 from django.utils import timezone
+import pytz
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -160,8 +162,9 @@ def customer_order(request):
                         email=response_data['email']).lname) + \
                " \"custid\":%d, " % cust_id + \
                "\"ordertime\":\"%s\"," % \
-                    Order.objects.get(ord_id=ord_id).time.strftime(
-                    "%I:%M %p") + \
+                    Order.objects.get(ord_id=ord_id).time.astimezone(
+                        pytz.timezone('US/Eastern')).strftime(
+                        "%I:%M %p") + \
                " \"orderid\":%d}" % ord_id
             post_data = [('new_message', post_str),]
             result = urlopen('http://localhost:1025', urlencode(post_data))
