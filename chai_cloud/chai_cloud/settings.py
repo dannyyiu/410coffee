@@ -17,6 +17,11 @@ SECRET_KEY = 'sc6o6hq2he*$y5-k%y+&)m#y8reu(0!x4eydt*2ekixz#jo3t('
 DEBUG = True
 
 TEMPLATE_DEBUG = True
+WS_URL = "ws://localhost:1025/ws" # DEBUG
+HTTP_URL = "http://localhost:8000/" # DEBUG
+
+#WS_URL = "ws://chaiapp.tk/ws" # DEPLOY
+#HTTP_URL = "http://localhost/" # DEPLOY
 
 ALLOWED_HOSTS = []
 
@@ -29,8 +34,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'mathfilters',
     'api',
     'django.contrib.admin',
 )
@@ -45,17 +48,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.TemplateHTMLRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
+
 
 ROOT_URLCONF = 'chai_cloud.urls'
 

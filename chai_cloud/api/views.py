@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 import json
 import ast # str to dict
+import os
 
 from django.utils import timezone
 import pytz
@@ -11,12 +12,15 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from api.models import *
-from api.serializers import APISerializer, StoreSerializer, InventorySerializer
-
 from forms import *
 
 from urllib2 import urlopen
 from urllib import urlencode
+
+from chai_cloud import settings
+
+import sqlite3
+import random
 
 class JSONResponse(HttpResponse):
     """ JSON rendered HTTP response. """
@@ -40,13 +44,16 @@ def store_view(request, store_name):
     if request.method == "GET":
 
         # Lists all orders and store inventory
+        # Render: HTML
         store_id = Store.objects.get(name=store_name).store_id
         inventory = Inventory.objects.filter(store_id=store_id)
         orders = Order.objects.filter(store_id=store_id)
         current_orders = orders.filter(orderdetail__active=1).distinct()
+        websocket_url = settings.WS_URL
         form = InventoryActiveForm() # empty form for GET requests
         html_data = {'inventory': inventory,
                      'orders': orders,
+                     'WS_URL': websocket_url,
                      'current_orders': current_orders,
                      'store_name': store_name,
                      'store_id': store_id,
@@ -57,6 +64,7 @@ def store_view(request, store_name):
     if request.method == 'POST':
 
         # Updates active/inactive status of inventory item
+        # Intended for AJAX calls
         if request.POST.get('active'):
             form = InventoryActiveForm(request.POST)
             if form.is_valid():
@@ -68,9 +76,11 @@ def store_view(request, store_name):
                     prod_id=prod_id).filter(
                     store_id=store_id)
                 selected.update(active=active)
-                return HttpResponseRedirect('/store-%s' % store_name)
+                #return HttpResponseRedirect('/store-%s' % store_name) # for html views
+                return HttpResponse(json.dumps(active)) # for ajax calls
         
         # Update order active status to 0 when order is complete
+        # Intended for AJAX calls
         if request.POST.get('complete_order'):
             form = CompleteOrder(request.POST)
             details_id = request.POST['details_id']
@@ -81,12 +91,16 @@ def store_view(request, store_name):
             return HttpResponse(json.dumps(details_id)) # for ajax calls
 
 
+
 ##########################
 # Customer views
 ##########################
 
 @csrf_exempt
 def customer_order(request):
+    """
+    Take customer orders through HTTP POST requests from customer app.
+    """
 
     # Does not allow GET request
     if request.method == "GET":
@@ -172,17 +186,80 @@ def customer_order(request):
             return HttpResponse(json.dumps(response_data), 
                                 content_type="application/json")
 
+        # Generate one customer order from the store view
+        # Used only for demo purposes
+        # Intended for AJAX calls
+        if request.POST.get("generate_orders") \
+                    and request.POST.get("store_name"):
+            #os.system(
+            #    "python _customer_simulate.py %s" % request.POST['store_name']
+            #)
+            print ":::::randorder for", request.POST['store_name']
+            random_order(request.POST['store_name'])
+            return HttpResponse(json.dumps(request.POST['store_name']))
 
 
+####################
+# Helper functions
+####################
+def random_order(store_name):
+    """
+    Add an order to a store with a random customer, random inventory item.
+    Uses HTTP POST request to localhost:8000.
+    """
+    conn = sqlite3.connect(settings.DATABASES['default']['NAME'])
+    cur = conn.cursor()
 
+    # Get random customer email
+    cur.execute("select max(cust_id) from Customer")
+    max_id = cur.fetchone()[0]
+    cur.execute(
+        "select email from Customer where cust_id=?", 
+        (random.randint(1,max_id),)
+    )
+    email = cur.fetchone()[0]
 
-
-
-
-
-
-
-
+    # Generate random order list of 1-5 items
+    cur.execute(
+        "select store_id from Store where name=?",
+        (store_name,)
+    )
+    store_id = cur.fetchone()[0]
+    print "store_id::::", store_id
+    cur.execute(
+        "select prod_id from Inventory where active=1 and store_id=?",
+        (store_id,)
+    )
+    raw_list = cur.fetchall()
+    # edge case: less than 5 active items
+    max_length = [5, len(raw_list)][len(raw_list) < 5]
+    if not max_length:
+        print "[DEBUG] No active items in: %s. Cannot make orders." % \
+               store_name
+        return 0
+    prod_id_list = random.sample(
+        [i[0] for i in raw_list],
+        random.randint(1,max_length)
+    )
+    
+    order_str = "" # string format for order list
+    for prod_id in prod_id_list:
+        # Get random option for each product
+        cur.execute(
+            "select op_id from Option where prod_id=?",
+            (prod_id,)
+        )
+        op_id = random.choice([i[0] for i in cur.fetchall()])
+        order_str += "{'prod_id': %d, 'op_id':%d}, " % (prod_id, op_id)
+    order_str = "[%s]" % order_str[:-2]
+    
+    # POST call
+    post_data = [
+        ('order_list', order_str), 
+        ('store_name', store_name), 
+        ('email', email),
+    ]
+    result = urlopen(settings.HTTP_URL + 'order', urlencode(post_data))
 
 
 
