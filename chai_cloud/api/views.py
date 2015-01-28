@@ -182,7 +182,6 @@ def customer_order(request):
                " \"orderid\":%d}" % ord_id
             post_data = [('new_message', post_str),]
             result = urlopen('http://localhost:1025', urlencode(post_data))
-
             return HttpResponse(json.dumps(response_data), 
                                 content_type="application/json")
 

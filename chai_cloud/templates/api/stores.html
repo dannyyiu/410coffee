@@ -36,7 +36,7 @@
       socket.ws = $.gracefulWebSocket("{{ WS_URL }}");
       socket.send = function (message) {
         socket.ws.send(message);
-      }
+      };
       socket.ws.onmessage = function (event) {
         // Gets a WS request from Customer/Store
         var messageFromServer = event.data;

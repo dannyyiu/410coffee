@@ -20,7 +20,7 @@ TEMPLATE_DEBUG = True
 WS_URL = "ws://localhost:1025/ws" # DEBUG
 HTTP_URL = "http://localhost:8000/" # DEBUG
 
-#WS_URL = "ws://chaiapp.tk/ws" # DEPLOY
+#WS_URL = "ws://chaiapp.tk:1025/ws" # DEPLOY
 #HTTP_URL = "http://localhost/" # DEPLOY
 
 ALLOWED_HOSTS = []
