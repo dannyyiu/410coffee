@@ -11,6 +11,7 @@ import sqlite3
 from pprint import pprint # For testing
 import random # for random populating per store
 from math import ceil
+import bcrypt
 
 
 def generate_customers(filename, no=500):
@@ -39,7 +40,8 @@ def generate_customers(filename, no=500):
     for name in random_names:
         [fname, lname] = name.rsplit(" ", 1)
         email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
-        passw = name.replace(".", "").replace(" ", "")
+        print "Hashing pw for", name, "..."
+        passw = bcrypt.hashpw(name.replace(".", "").replace(" ", ""), bcrypt.gensalt())
     
     # Write it all in a data file
     with open(filename, 'w') as w:

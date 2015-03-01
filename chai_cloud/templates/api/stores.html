@@ -146,11 +146,24 @@
       var completeButton = document.getElementsByName("complete_order");
       var activeButton = document.getElementsByName("active_button");
       var generateButton = document.getElementById("generate");
+      var registerButton = document.getElementById("register");
       //generateButton.css({"color":"red","border":"2px solid red"});
+
+      // Register button
+      registerButton.onclick = function(e) {
+        e.preventDefault();
+        
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "register", true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("email=danny.yiu@gmail.com&fname=danny&lname=yiu&pass=asdfasdf");
+      };
       
       // Order generation button
+
       generateButton.onclick = function(e) {
         e.preventDefault();
+
         xmlhttp = new XMLHttpRequest();
         xmlhttp.open("POST", "order", true);
         xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -305,6 +318,7 @@
             </div>
             <div class="tools">
               <a id="generate" href="#" class="reload">
+              <a id="register" href="#" class="reload">
               </a>
             </div>
           </div>

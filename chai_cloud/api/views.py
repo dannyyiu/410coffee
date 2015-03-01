@@ -22,6 +22,8 @@ from chai_cloud import settings
 import sqlite3
 import random
 
+import bcrypt
+
 class JSONResponse(HttpResponse):
     """ JSON rendered HTTP response. """
 
@@ -196,6 +198,28 @@ def customer_order(request):
             print ":::::randorder for", request.POST['store_name']
             random_order(request.POST['store_name'])
             return HttpResponse(json.dumps(request.POST['store_name']))
+
+@csrf_exempt
+def customer_register(request):
+    """ Creates new customer account. """
+
+    # Does not allow GET request
+    if request.method == "GET":
+        return HttpResponse(status=404)
+
+    if request.method == "POST":
+        if request.POST.get('email') and \
+                    request.POST.get('pass') and \
+                    request.POST.get('fname') and \
+                    request.POST.get('lname'):
+            hashed = bcrypt.hashpw(request.POST['pass'].encode('utf-8'), bcrypt.gensalt())
+            register = Customer.objects.create(
+                fname=request.POST['fname'],
+                lname=request.POST['lname'],
+                email=request.POST['email'],
+                passhash=hashed)
+            return HttpResponse(json.dumps({'status':'registered'}), 
+                                content_type="application/json")
 
 
 ####################
