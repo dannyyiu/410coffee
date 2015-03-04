@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="true" jdk="Android API 19 Platform" jdk_type="Android SDK">
-	<output-test url="file://$MODULE_DIR$/../../intelli_workspace/QR_front/out/test/zxing"/>
-	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$"/>
-	<levels>
-		<level name="core-3.0.1-SNAPSHOT" value="project"/>
-	</levels>
-</component>
