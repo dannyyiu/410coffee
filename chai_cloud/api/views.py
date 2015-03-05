@@ -221,6 +221,76 @@ def customer_register(request):
             return HttpResponse(json.dumps({'status':'registered'}), 
                                 content_type="application/json")
 
+@csrf_exempt
+def customer_menu(request):
+    """ Retreives menu information using customer app interface. """
+
+    # Does not allow POST request
+    if request.method == "POST":
+        return HttpResponse(status=404)
+
+    if request.method == "GET":
+        if request.GET.get('store_id'): # get a menu of a store
+
+            inventory = Inventory.objects.filter(
+                store_id=request.GET['store_id'], active=1)
+            categories = [
+                d['cat_name'] for d in Category.objects.values('cat_name')]
+
+            
+            # Build JSON response:
+            # { 
+            # category_name : 
+            #   { 
+            #   prod_name : 
+            #     { 
+            #     'img_url' : img_url,
+            #     'prod_id' : prod_id,
+            #     'prod_name' : prod_name,
+            #     }, ...s
+            #   }, ...
+            # }
+            html_data = {}
+            for cat in categories:
+                prod_dict = {}
+                for item in inventory.filter(prod__cat__cat_name=cat):
+                    prod_dict[item.prod.prod_name] = {
+                        'img_url' : item.prod.img_path,
+                        'prod_id' : str(item.prod_id),
+                        'prod_name': item.prod.prod_name,
+                    }
+                html_data[cat] = prod_dict
+
+            return HttpResponse(json.dumps(html_data))
+
+@csrf_exempt
+def customer_product(request):
+    """ Retreives product info using customer app interface. """
+
+    # Does not allow POST request
+    if request.method == "POST":
+        return HttpResponse(status=404)
+
+    if request.method == "GET":
+        if request.GET.get('prod_id'):
+
+            options = Option.objects.filter(prod_id=request.GET['prod_id'])
+
+            # Build JSON response:
+            # {
+            # op_id
+            #   {
+            #   op_name : price
+            #   }
+            # }
+            html_data = {}
+            for option in options:
+                html_data[str(option.op_id)] = {
+                    option.op_name: str(option.price)
+                }
+            return HttpResponse(json.dumps(html_data))
+
+
 
 ####################
 # Helper functions

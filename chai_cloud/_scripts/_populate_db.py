@@ -37,19 +37,16 @@ def generate_customers(filename, no=500):
         dummy_names[i] 
         for i in random.sample(range(0, len(dummy_names)-1), no)
     ]
-    for name in random_names:
-        [fname, lname] = name.rsplit(" ", 1)
-        email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
-        print "Hashing pw for", name, "..."
-        passw = bcrypt.hashpw(name.replace(".", "").replace(" ", ""), bcrypt.gensalt())
-    
+
     # Write it all in a data file
     with open(filename, 'w') as w:
         out = ""
         for name in random_names:
             [fname, lname] = name.rsplit(" ", 1)
             email = "-".join(name.replace(".", "").split(" ")) + "@chai.com"
-            passw = name.replace(".", "").replace(" ", "")
+            #passw = name.replace(".", "").replace(" ", "")
+            print "Hashing pw for", name, "..."
+            passw = bcrypt.hashpw(name.replace(".", "").replace(" ", ""), bcrypt.gensalt())
             out += "%s|\n" % "|".join([fname, lname, email, passw])
         w.write(out)
 

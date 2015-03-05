@@ -14,6 +14,9 @@ sudo python twisted-websocket-4173-4/setup.py install
 
 sudo easy_install pytz
 
+sudo apt-get install libffi-dev
+sudo easy_install bcrypt
+
 sudo cp /home/ubuntu/chai_cloud_deploy/chai.conf /etc/apache2/sites-enabled/chai.conf
 
 sudo chmod -R a+x /home/ubuntu/chai_cloud_deploy/
