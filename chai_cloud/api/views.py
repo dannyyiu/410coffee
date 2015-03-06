@@ -208,6 +208,7 @@ def customer_register(request):
         return HttpResponse(status=404)
 
     if request.method == "POST":
+        # check all required info is in the POST request
         if request.POST.get('email') and \
                     request.POST.get('pass') and \
                     request.POST.get('fname') and \

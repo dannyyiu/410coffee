@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/flat-ui.css">
+  <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/demo.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js"></script>
+  <script>
+    var url = "http://www.chaiapp.tk/"
+    
+    // Login page functions
+    function login() {
+      loginInfo = {
+        email : $('#email').val(),
+        pass : $('#pass').val(),
+      };
+      alert("User: " + loginInfo.email + " Pass: " + loginInfo.pass);
+      app.navi.pushPage('store.html', {store_id:"12",});
+    };
+    
+    // Register page functions
+    function register() {
+      
+      regInfo = {
+        fname : $('#reg-fname').val(),
+        lname : $('#reg-lname').val(),
+        email : $('#reg-email').val(),
+        pass : $('#pass-confirm1').val(),
+        pass2: $('#pass-confirm2').val()
+      };
+      // Check password match
+      if (regInfo.pass == regInfo.pass2) {
+        // Format params for POST request
+        alert (regInfo.fname + " " + regInfo.lname + " " + regInfo.email + " " + regInfo.pass);
+        if (regInfo.fname && regInfo.lname && regInfo.email && regInfo.pass) {
+          postParams = {
+            fname : regInfo.fname,
+            lname : regInfo.lname,
+            email : regInfo.email,
+            pass : regInfo.pass
+          };
+          alert(decodeURIComponent($.param(postParams, true)));
+          //httpPost("register/", postParams);
+          
+          params = decodeURIComponent($.param(postParams, true));
+          url = url + "c-register/";
+          xmlhttp = new XMLHttpRequest();
+          xmlhttp.open("POST", url, true);
+          xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+          xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+              //alert(xmlhttp.status);
+              //if (xmlhttp.status == 200 || xmlhttp.status == 0) {
+            };
+          };
+          xmlhttp.send(params);
+          alert(xmlhttp.responseText);
+          
+          alert("done");
+        } else {
+          alert("Please fill in all required fields.");
+        };
+
+      } else {
+        alert("Passwords do not match! Please try again.");
+      }; 
+    };
+    
+    // Server functions
+    function httpPost(url, params) {
+      /* 
+      Takes in URL for chaiapp domain (such as "order/") and param dictionary object
+      Sends a POST request
+      */
+      
+    };
+    
+  </script>
+  <script>
+    ons.bootstrap();
+  </script>
+  <style>
+    .item {
+      padding: 10px;
+      line-height: 1;
+    }
+    .item-thum {
+      background-color: #ccc;
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+    }
+    .item-title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .item-desc {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.3;
+      margin: 4px 0 0 0;
+      padding: 0 30px 0 0;
+    }
+    .item-label {
+      font-size: 12px;
+      color: #999;
+      float: right;
+    }
+  </style>
+</head>
+
+
+<body>    
+
+  <ons-navigator page="login.html" animation="slide" var="app.navi"></ons-navigator>
+  
+  <!-- Login page -->
+  <ons-template id="login.html">
+    <ons-page id="login-page" style="background-color:white;">
+      <div style="text-align:center;">
+        <img src="img/chai_logo2_large.png" style="width:40%;margin-top:30%;"/>
+      </div>
+      <div class="form-group" style="margin-top:10%;" align="center">
+        <input type="text" placeholder="Enter your email" class="form-control" style="width:80%" id="email">
+        <input type="password" class="form-control login-field" placeholder="Password" style="width:80%;margin-top:3%" id="pass">
+        <a id="login-button" onclick="login()" class="btn btn-block btn-lg btn-primary" style="width:80%;margin-top:3%;background-color:#f78f1f;border-color:#f78f1f;">Login</a>
+        <a class="login-link" id="register-button">Register</a>
+      </div>
+    </ons-page>
+  </ons-template>
+  
+  <!-- Register Page -->
+  <ons-template id="register.html">
+    <ons-page id="register-page" style="background-color:white;">
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Register</div>
+      </ons-toolbar>
+      <div class="form-group" style="margin-top:10%;" align="center">
+        <input type="text" value placeholder="First Name" class="form-control" style="width:80%;margin-top:3%;" id="reg-fname">
+        <input type="text" value placeholder="Last Name" class="form-control" style="width:80%;margin-top:3%;" id="reg-lname">
+        <input type="text" value placeholder="Enter your email" class="form-control" style="width:80%;margin-top:3%;" id="reg-email">
+        <input type="password" class="form-control login-field" value placeholder="Enter a password" style="width:80%;margin-top:3%;" id="pass-confirm1">
+        <input type="password" class="form-control login-field" value placeholder="Confirm password" style="width:80%;margin-top:3%;" id="pass-confirm2">
+        
+        <a href="#" onclick="register()" class="btn btn-block btn-lg btn-primary" style="width:80%;margin-top:3%;background-color:#f78f1f;border-color:#f78f1f;">Register</a>
+      </div>
+    </ons-page>
+  </ons-template>
+  
+  <!-- Store page -->
+  <ons-template id="store.html">
+    <ons-page id="store-page" style="background-color:white;">
+    
+      <ons-toolbar>
+        <div class="center">Store</div>
+      </ons-toolbar>
+      
+      <div id="store_content">
+      <ons-carousel swipeable style="margin-top: 5px; height: 150px;" overscrollable auto-scroll item-width="120px">
+        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
+          <div style="background-color: #ccc; width: 110px; height: 110px; margin: 5px; border-radius: 6px;"></div>
+          <div style="margin: 5px;">asdf asdf asd s</div>
+          
+        </ons-carousel-item>
+      </ons-carousel>
+      
+      <ons-carousel swipeable style="margin-top: 5px; height: 150px;" overscrollable auto-scroll item-width="120px">
+        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
+          <div style="background-color: #ccc; width: 110px; height: 110px; margin: 5px; border-radius: 6px;"></div>
+          <div style="margin: 5px;">asdf asdf asd s</div>
+          
+        </ons-carousel-item>
+      </ons-carousel>
+  
+      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
+        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
+          <div style="background-color: #ddd; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
+        </ons-carousel-item>
+      </ons-carousel>
+  
+      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
+        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
+          <div style="background-color: #ccc; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
+        </ons-carousel-item>
+      </ons-carousel>
+  
+      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
+        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
+          <div style="background-color: #ddd; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
+        </ons-carousel-item>
+      </ons-carousel>
+      </div>
+      
+    </ons-page>
+  </ons-template>
+  
+
+  <ons-template id="list.html">
+    <ons-page id="list-page">
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Master Details</div>
+      </ons-toolbar>
+
+      <ons-list>
+
+        <ons-list-item modifier="chevron" class="item">
+          <ons-row>
+            <ons-col width="60px"> 
+              <div class="item-thum"></div>
+            </ons-col>
+            <ons-col>
+              <header>
+                <span class="item-title">Item Title</span>
+                <span class="item-label">4h</span>
+              </header>
+              <p class="item-desc">Details description 1</p>
+            </ons-col>
+          </ons-row>                          
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron" class="item">
+          <ons-row>
+            <ons-col width="60px"> 
+              <div class="item-thum"></div>
+            </ons-col>
+            <ons-col>
+              <header>
+                <span class="item-title">Another Item Title</span>
+                <span class="item-label">6h</span>
+              </header>
+              <p class="item-desc">Ut enim ad minim veniam.</p>
+            </ons-col>
+          </ons-row>                          
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron" class="item">
+          <ons-row>
+            <ons-col width="60px"> 
+              <div class="item-thum"></div>
+            </ons-col>
+            <ons-col>
+              <header>
+                <span class="item-title">Yet Another Item Title</span>
+                <span class="item-label">1day ago</span>
+              </header>
+              <p class="item-desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </ons-col>
+          </ons-row>                          
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="detail.html">
+    <ons-page id="detail-page">
+
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Details</div>
+      </ons-toolbar>
+
+      <ons-list modifier="inset" style="margin-top: 10px">
+        <ons-list-item class="item">
+          <ons-row>
+            <ons-col width="60px"> 
+              <div class="item-thum"></div>
+            </ons-col>
+            <ons-col>
+              <header>
+                <span class="item-title">Title</span>
+                <span class="item-label">Foobar</span>
+              </header>
+              <p class="item-desc">desc</p>
+            </ons-col>
+          </ons-row>
+        </ons-list-item>
+
+        <ons-list-item modifier="chevron" id="add-note-action" class="add-note-action-item">
+          <ons-icon icon="ion-chatboxes" fixed-width="true" style="color: #ccc"></ons-icon>
+          Add a note
+        </ons-list-item>
+      </ons-list>
+
+      <ons-list style="margin-top: 10px">
+        <ons-list-item class="item">
+          <header>
+            <span class="item-title">Lorem ipsum dolor sit amet</span>
+          </header>
+          <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </ons-list-item>
+        <ons-list-item class="item">
+          <header>
+            <span class="item-title">Lorem ipsum dolor sit amet</span>
+          </header>
+          <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </ons-list-item>
+        <ons-list-item class="item">
+          <header>
+            <span class="item-title">Lorem ipsum dolor sit amet</span>
+          </header>
+          <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </ons-list-item>
+      </ons-list>
+
+      <br>
+
+    </ons-page>
+  </ons-template>
+
+</body>
+
+</html>

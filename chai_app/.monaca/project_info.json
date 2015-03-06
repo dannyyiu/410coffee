@@ -1,0 +1,14 @@
+{
+    "plugins": [
+        "mobi.monaca.plugins.Monaca",
+        "org.apache.cordova.splashscreen",
+        "org.apache.cordova.vibration",
+        "mobi.monaca.plugins.BarcodeScanner",
+        "mobi.monaca.plugins.WebSocketServer"
+    ],
+    "framework_version": "3.5",
+    "xcode_version": "5",
+    "external_plugins": [
+
+    ]
+}
