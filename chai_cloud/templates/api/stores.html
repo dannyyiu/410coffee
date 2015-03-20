@@ -154,7 +154,7 @@
         e.preventDefault();
         
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "register", true);
+        xmlhttp.open("POST", "c-register", true);
         xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xmlhttp.send("email=danny.yiu@gmail.com&fname=danny&lname=yiu&pass=asdfasdf");
       };
@@ -165,7 +165,7 @@
         e.preventDefault();
 
         xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "order", true);
+        xmlhttp.open("POST", "c-order", true);
         xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xmlhttp.send("store_name={{ store_name }}&generate_orders=1");
       };

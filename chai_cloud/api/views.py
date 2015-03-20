@@ -92,6 +92,21 @@ def store_view(request, store_name):
             #return HttpResponseRedirect('/store-%s' % store_name) # for html views
             return HttpResponse(json.dumps(details_id)) # for ajax calls
 
+@csrf_exempt
+def qr(request):
+    """
+    Generate QR code of the current store.
+    URL parameters: store_id
+    """
+    if request.method == "GET":
+        if request.GET.get('store_id'):
+            return render(request, 'api/qr.html', {'store_id': request.GET['store_id']})
+        else:
+            # Incorrect parameters
+            return HttpResponse(status=404)
+    else:
+        # Do not allow POST
+        return HttpResponse(status=404)
 
 
 ##########################
@@ -111,7 +126,6 @@ def customer_order(request):
     # Handle POST requests 
     if request.method == "POST":
         # New orders
-        #return HttpResponse(request.POST.get('order_list'))
         if request.POST.get('order_list') and request.POST.get('store_name'):
             #order_list = form.cleaned_data['order_list']
             response_data = {}
@@ -258,7 +272,8 @@ def customer_menu(request):
                     prod_dict[item.prod.prod_name] = {
                         'img_url' : item.prod.img_path,
                         'prod_id' : str(item.prod_id),
-                        'prod_name': item.prod.prod_name,
+                        'prod_desc': item.prod.desc,
+                        'price': str(float(item.prod.price) * float(item.discount)),
                     }
                 html_data[cat] = prod_dict
 
@@ -353,7 +368,7 @@ def random_order(store_name):
         ('store_name', store_name), 
         ('email', email),
     ]
-    result = urlopen(settings.HTTP_URL + 'order', urlencode(post_data))
+    result = urlopen(settings.HTTP_URL + 'c-order', urlencode(post_data))
 
 
 

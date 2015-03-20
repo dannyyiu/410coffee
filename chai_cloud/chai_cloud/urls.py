@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from api.views import store_view, customer_order, customer_register, customer_menu, customer_product
+from api.views import *
 from django.contrib import admin
 from django.views.generic import RedirectView
  
@@ -7,7 +7,8 @@ urlpatterns = patterns(
     '', 
     url(r'^admin/', include(admin.site.urls)),
     url(r'store-(?P<store_name>[a-zA-Z]+)', store_view),
-    url(r'order/?', customer_order),
+    url(r's-qr/?', qr),
+    url(r'c-order/?', customer_order),
     url(r'c-order/?', customer_order),
     url(r'c-menu/?', customer_menu),
     url(r'c-prod/?', customer_product),
