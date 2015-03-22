@@ -11,7 +11,10 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/app.js"></script>
   <script>
-    var url = "http://www.chaiapp.tk/"
+    ons.bootstrap();
+    var main_url = "http://www.chaiapp.tk/"
+    
+    // All after page load functions
     
     // Login page functions
     function login() {
@@ -20,7 +23,7 @@
         pass : $('#pass').val(),
       };
       alert("User: " + loginInfo.email + " Pass: " + loginInfo.pass);
-      app.navi.pushPage('store.html', {store_id:"12",});
+      app.navi.pushPage('store.html');
     };
     
     // Register page functions
@@ -36,7 +39,7 @@
       // Check password match
       if (regInfo.pass == regInfo.pass2) {
         // Format params for POST request
-        alert (regInfo.fname + " " + regInfo.lname + " " + regInfo.email + " " + regInfo.pass);
+        //alert (regInfo.fname + " " + regInfo.lname + " " + regInfo.email + " " + regInfo.pass);
         if (regInfo.fname && regInfo.lname && regInfo.email && regInfo.pass) {
           postParams = {
             fname : regInfo.fname,
@@ -44,11 +47,10 @@
             email : regInfo.email,
             pass : regInfo.pass
           };
-          alert(decodeURIComponent($.param(postParams, true)));
-          //httpPost("register/", postParams);
           
+          // Send POST to register
           params = decodeURIComponent($.param(postParams, true));
-          url = url + "c-register/";
+          var url = main_url + "c-register/";
           xmlhttp = new XMLHttpRequest();
           xmlhttp.open("POST", url, true);
           xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -58,10 +60,13 @@
               //if (xmlhttp.status == 200 || xmlhttp.status == 0) {
             };
           };
-          xmlhttp.send(params);
-          alert(xmlhttp.responseText);
           
-          alert("done");
+          xmlhttp.send(params);
+          //alert(xmlhttp.responseText);
+          
+          alert("Registered!");
+          document.getElementById('email').value = postParams.email;
+          app.navi.popPage();
         } else {
           alert("Please fill in all required fields.");
         };
@@ -71,14 +76,69 @@
       }; 
     };
     
-    // Server functions
-    function httpPost(url, params) {
-      /* 
-      Takes in URL for chaiapp domain (such as "order/") and param dictionary object
-      Sends a POST request
-      */
-      
+    // Scan page functions
+    function scan() {
+      window.plugins.barcodeScanner.scan( function(result) {
+        // Redirect page to scanned store page
+        // Scanned QR contains store ID as an int string. (ie. "12")
+        app.navi.resetToPage("store.html", {store_id: "12",});
+        
+      }, function(error) {
+        alert("Scanning error: " + error);
+      });
     };
+    
+    // Store page functions
+    function store_refresh() {
+      var options = app.navi.getCurrentPage().options;
+    
+      // Check for store_id
+      // store_id is only passed if QR code for store is scanned
+      if ("store_id" in options) {
+        // Inside valid store
+        //alert("store_id: " + options.store_id);
+        var url = main_url + "c-menu/?store_id=" + options.store_id;
+        $.getJSON(url, function(data) {
+          //alert("query success: shop " + options.store_id);
+          // alert(JSON.stringify(data));
+          var html = ""; // empty inner HTML container to store new content
+          var category; // string of category name from JSON response
+          var content = document.getElementById("store-list"); // HTML element of the store page menu list
+          
+          for (category in data) {
+            // HTML for each category
+            // Note: category may be lower case, so capitalize CSS is used
+            html += "<ons-list-header style=\"text-transform:capitalize;\">" + category + "</ons-list-header>\n";
+            var product;
+            for (product in data[category]) {
+              // HTML for each item
+              // header
+              html += "<ons-list-item modifier=\"tappable\" class=\"list-item-container\"><ons-row>";
+              // product image
+              html += "<ons-col width=\"105px\"><img src=\"" + img_url + data[category][product]["img_url"] + "\" class=\"store-thumbnail\"></ons-col>\n";
+              //html += "<ons-col width=\"165px\"><img src=" + "http://www.chaiapp.tk/static/menu_img/breakf-hash-brown.png" + "\" class=\"store-thumbnail\"></ons-col>\n";
+              // product info
+              html += "<ons-col>\n";
+              html += "<div class=\"store-name\">" + product + "</div>\n";
+              html += "<div class=\"store-feint\">Starting $" + parseFloat(data[category][product]["price"]).toFixed(2) + "</div>\n";
+              html += "<div class=\"store-desc\">" + data[category][product]["prod_desc"] + "</div>\n";
+              html += "</ons-col>\n</ons-row>\n</ons-list-item>";
+            }
+            //alert(JSON.stringify(data[x]));
+          }
+          // Update store menu list
+          //content.innerHTML="<ons-list-header style=\"text-transform:capitalize;\">coffee</ons-list-header>";
+          //content.innerHTML += "<ons-list-item modifier=\"tappable\">asdf</ons-list-item>"
+          content.innerHTML = html;
+          ons.compile(content);
+        });
+        
+      } else {
+        // Not inside store, or not scanned QR yet
+        //alert(JSON.stringify(options));
+      };
+    };
+      
     
   </script>
   <script>
@@ -113,7 +173,6 @@
     }
   </style>
 </head>
-
 
 <body>    
 
@@ -155,95 +214,38 @@
   
   <!-- Store page -->
   <ons-template id="store.html">
+
     <ons-page id="store-page" style="background-color:white;">
     
       <ons-toolbar>
+        <div class="left"><ons-toolbar-button><i class="fa fa-shopping-cart fa-lg"></i></ons-back-button></div>
         <div class="center">Store</div>
+        <div class="right"><ons-toolbar-button id="qr-button" onclick="scan()"><i class="fa fa-qrcode fa-lg"></i></ons-toolbar-button></div>
       </ons-toolbar>
       
-      <div id="store_content">
-      <ons-carousel swipeable style="margin-top: 5px; height: 150px;" overscrollable auto-scroll item-width="120px">
-        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
-          <div style="background-color: #ccc; width: 110px; height: 110px; margin: 5px; border-radius: 6px;"></div>
-          <div style="margin: 5px;">asdf asdf asd s</div>
-          
-        </ons-carousel-item>
-      </ons-carousel>
+      <ons-scroller>
+        <ons-list id="store-list">
+        </ons-list>
+      </ons-scroller>
       
-      <ons-carousel swipeable style="margin-top: 5px; height: 150px;" overscrollable auto-scroll item-width="120px">
-        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
-          <div style="background-color: #ccc; width: 110px; height: 110px; margin: 5px; border-radius: 6px;"></div>
-          <div style="margin: 5px;">asdf asdf asd s</div>
-          
-        </ons-carousel-item>
-      </ons-carousel>
+    </ons-page>
+
+  </ons-template>
   
-      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
-        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
-          <div style="background-color: #ddd; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
-        </ons-carousel-item>
-      </ons-carousel>
-  
-      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
-        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
-          <div style="background-color: #ccc; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
-        </ons-carousel-item>
-      </ons-carousel>
-  
-      <ons-carousel swipeable style="height: 70px;" overscrollable auto-scroll item-width="70px">
-        <ons-carousel-item ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]">
-          <div style="background-color: #ddd; width: 60px; height: 60px; margin: 5px; border-radius: 6px;"></div>
-        </ons-carousel-item>
-      </ons-carousel>
-      </div>
-      
+  <!-- Scan page -->
+  <ons-template id="scan.html">
+    <ons-page id="scan-page" style="background-color:white;">
+
+    <hr> BarcodeReader DEMO <hr><br>
+    <input type="button" onClick ="scanBarcode()" value ="Scan" />
     </ons-page>
   </ons-template>
   
 
-  <ons-template id="list.html">
-    <ons-page id="list-page">
-      <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center">Master Details</div>
-      </ons-toolbar>
+</body>
 
-      <ons-list>
-
-        <ons-list-item modifier="chevron" class="item">
-          <ons-row>
-            <ons-col width="60px"> 
-              <div class="item-thum"></div>
-            </ons-col>
-            <ons-col>
-              <header>
-                <span class="item-title">Item Title</span>
-                <span class="item-label">4h</span>
-              </header>
-              <p class="item-desc">Details description 1</p>
-            </ons-col>
-          </ons-row>                          
-        </ons-list-item>
-
-        <ons-list-item modifier="chevron" class="item">
-          <ons-row>
-            <ons-col width="60px"> 
-              <div class="item-thum"></div>
-            </ons-col>
-            <ons-col>
-              <header>
-                <span class="item-title">Another Item Title</span>
-                <span class="item-label">6h</span>
-              </header>
-              <p class="item-desc">Ut enim ad minim veniam.</p>
-            </ons-col>
-          </ons-row>                          
-        </ons-list-item>
-
-        <ons-list-item modifier="chevron" class="item">
-          <ons-row>
-            <ons-col width="60px"> 
-              <div class="item-thum"></div>
+</html>
+iv class="item-thum"></div>
             </ons-col>
             <ons-col>
               <header>
