@@ -14,7 +14,7 @@ from math import ceil
 import bcrypt
 
 
-def generate_customers(filename, no=500):
+def generate_customers(filename, no=20):
     """
     Generate dummy customers for testing.
     Using name DB for random names.
@@ -32,7 +32,7 @@ def generate_customers(filename, no=500):
                 len(line.split(" ")[-1]) > 3:
             dummy_names.append(line.strip())
 
-    # Get a subset of random names (500 by default)
+    # Get a subset of random names (default set by parameter: no=20)
     random_names = [ 
         dummy_names[i] 
         for i in random.sample(range(0, len(dummy_names)-1), no)

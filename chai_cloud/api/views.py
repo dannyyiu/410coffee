@@ -160,6 +160,7 @@ def customer_order(request):
                     ord_id=ord_id,
                     prod_id=int(details['prod_id']),
                     op_id=int(details['op_id']),
+                    quantity=int(details['quantity']),
                     active=1
                 ) for details in ast.literal_eval(response_data['order_list'])
             ]
@@ -176,6 +177,7 @@ def customer_order(request):
                         ord_id=detail.ord_id,
                         prod_id=detail.prod_id,
                         op_id=detail.op_id,
+                        quantity=detail.quantity,
                         active=1).id,
                 )
 
@@ -359,8 +361,10 @@ def random_order(store_name):
             (prod_id,)
         )
         op_id = random.choice([i[0] for i in cur.fetchall()])
-        order_str += "{'prod_id': %d, 'op_id':%d}, " % (prod_id, op_id)
-    order_str = "[%s]" % order_str[:-2]
+        quantity = random.randint(1,5)
+        order_str += "{'prod_id': %d, 'op_id':%d, 'quantity':%d}, " % \
+                     (prod_id, op_id, quantity)
+    order_str = "[%s]" % order_str[:-2] # trailing comma and space
     
     # POST call
     post_data = [

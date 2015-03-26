@@ -133,6 +133,7 @@ class OrderDetail(models.Model):
     ord = models.ForeignKey(Order)
     prod = models.ForeignKey(Menu)
     op = models.ForeignKey(Option)
+    quantity = models.IntegerField(blank=True, default=1)
     active = models.IntegerField(blank=True, default=1)
 
     class Meta:
