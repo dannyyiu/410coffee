@@ -21,8 +21,9 @@
     // store_id is only passed if QR code for store is scanned
     if ("store_id" in options) {
       // Inside valid store
+
       // Send request for store menu
-      var url = main_url + "c-menu/?store_id=" + options.store_id;
+      var url = MAIN_URL + "c-menu/?store_id=" + options.store_id;
       $.getJSON(url, function(data) {
         // Store data as json string in hidden div
         $("#inventory-json").html(JSON.stringify(data));
@@ -45,7 +46,7 @@
                     "onclick=\"select_options(this.id)\"><ons-row>";
             // product image
             html += "<ons-col width=\"105px\"><img src=\"" + 
-                    img_url + data[category][product]["img_url"] + 
+                    IMG_URL + data[category][product]["img_url"] + 
                     "\" class=\"store-thumbnail\"></ons-col>\n" + 
                     "<ons-col>\n" + 
                     "<div class=\"store-name\">" + product + "</div>\n" + 
@@ -68,7 +69,7 @@
       ons.notification.alert({
         message: 'Please scan store QR code to continue.',
         title: 'Store Verification',
-        buttonLabel: 'Scan Now (Skipped for testing)',
+        buttonLabel: 'Scan Now',
         animation: 'default', // or 'none'
         // modifier: 'optional-modifier'
         callback: function() {
@@ -78,19 +79,13 @@
     }
   });
   
-  
-
-})();        content.innerHTML = html;
-        ons.compile(content);
-      });
-    } else {
-      // Not inside store, or not scanned QR yet
-      //alert(JSON.stringify(options));
-      var content = document.getElementById("store-list"); // HTML element of the store page menu list
-      content.innerHTML = "Please verify your presence by scanning the store QR code.";
-    }
-  });
-  
+  // =============================== PayPal functions ================================
+  //$(document).on('pageinit', '#paypal-page', function() {
+    // Using paypal token, embed in-context express checkout page
+    //var options = app.navi.getCurrentPage().options;
+    //refresh_paypal_iframe(options.token);
+    
+  //});
   
 
 })();

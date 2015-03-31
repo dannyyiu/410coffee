@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="com.chai.chaiapp" version="1.0.0">
-  <name>CHAIapp</name>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.chaiapp.chai" version="1.0.0">
+  <name>CHAI</name>
   <description>Hello World App</description>
   <author/>
   <content src="index.html"/>
@@ -15,6 +15,7 @@
   <preference name="PageLength" value="0"/>
   <preference name="PaginationBreakingMode" value="page"/>
   <preference name="PaginationMode" value="unpaginated"/>
+  <plugin name="InAppBrowser" value="CDVInAppBrowser"/>
   <feature name="LocalStorage">
     <param name="ios-package" value="CDVLocalStorage"/>
   </feature>
@@ -27,9 +28,8 @@
   <access origin="*"/>
   <access origin="*.chaiapp.*"/>
   <access origin="*.hostip.*"/>
+  <access origin="*.paypal.*"/>
+  <access origin="*"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
-</widget>
-origin="*.chaiapp.*" />
-  <access origin="*.hostip.*" />
 </widget>

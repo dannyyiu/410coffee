@@ -1,0 +1,387 @@
+Temporary folder: /private/tmp/monaca/551a34d1fd1734a65ee08cd0
+Downloading project
+Download complete
+Running for 3.5
+Installing &quot;mobi.monaca.plugins.BarcodeScanner&quot; for android
+cordova version not detected (lacks script &quot;/private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/cordova/version&quot; ), continuing.
+Installing &quot;mobi.monaca.plugins.Monaca&quot; for android
+cordova version not detected (lacks script &quot;/private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/cordova/version&quot; ), continuing.
+Installing &quot;org.apache.cordova.inappbrowser&quot; for android
+cordova version not detected (lacks script &quot;/private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/cordova/version&quot; ), continuing.
+Installing &quot;org.apache.cordova.splashscreen&quot; for android
+Plugin &quot;mobi.monaca.plugins.Monaca&quot; already installed on android.
+Plugin &quot;org.apache.cordova.splashscreen&quot; already installed on android.
+Plugin &quot;mobi.monaca.plugins.BarcodeScanner&quot; already installed on android.
+Plugin &quot;org.apache.cordova.inappbrowser&quot; already installed on android.
+Running command: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/cordova/build --release
+Buildfile: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/build.xml
+
+-set-mode-check:
+
+-set-release-mode:
+
+-release-obfuscation-check:
+     [echo] proguard.config is ${proguard.config}
+
+-pre-build:
+
+-check-env:
+ [checkenv] Android SDK Tools Revision 23.0.2
+ [checkenv] Installed at /Applications/adt-bundle-mac/sdk
+
+-setup:
+     [echo] Project Name: Monaca
+  [gettype] Project Type: Application
+
+-build-setup:
+[getbuildtools] Using latest Build Tools: 20.0.0
+     [echo] Resolving Build Target for Monaca...
+[gettarget] Project Target:   Android 4.4.2
+[gettarget] API level:        19
+     [echo] ----------
+     [echo] Creating output directories if needed...
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/rsObj
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/rsLibs
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-gen
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/classes
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/dexedLibs
+     [echo] ----------
+     [echo] Resolving Dependencies for Monaca...
+[dependency] Library dependencies:
+[dependency] 
+[dependency] ------------------
+[dependency] Ordered libraries:
+[dependency] 
+[dependency] ------------------
+     [echo] ----------
+     [echo] Building Libraries with &apos;release&apos;...
+
+nodeps:
+
+-set-mode-check:
+
+-set-release-mode:
+
+-release-obfuscation-check:
+     [echo] proguard.config is ${proguard.config}
+
+-pre-build:
+
+-check-env:
+ [checkenv] Android SDK Tools Revision 23.0.2
+ [checkenv] Installed at /Applications/adt-bundle-mac/sdk
+
+-setup:
+     [echo] Project Name: CordovaLib
+  [gettype] Project Type: Android Library
+
+-build-setup:
+[getbuildtools] Using latest Build Tools: 20.0.0
+     [echo] Resolving Build Target for CordovaLib...
+[gettarget] Project Target:   Android 4.4.2
+[gettarget] API level:        19
+     [echo] ----------
+     [echo] Creating output directories if needed...
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/res
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/libs
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/res
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/rsObj
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/rsLibs
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-gen
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes
+    [mkdir] Created dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/dexedLibs
+     [echo] ----------
+     [echo] Resolving Dependencies for CordovaLib...
+[dependency] Library dependencies:
+[dependency] No Libraries
+[dependency] 
+[dependency] ------------------
+
+-code-gen:
+[mergemanifest] Merging AndroidManifest files into one.
+[mergemanifest] Manifest merger disabled. Using project manifest only.
+     [echo] Handling aidl files...
+     [aidl] No AIDL files to compile.
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Generating resource IDs...
+     [echo] ----------
+     [echo] Handling BuildConfig class...
+[buildconfig] Generating BuildConfig class.
+
+-pre-compile:
+
+-compile:
+    [javac] Compiling 90 source files to /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+     [echo] Creating library output jar file...
+      [jar] Building jar: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes.jar
+
+-post-compile:
+
+-obfuscate:
+
+-dex:
+     [echo] Library project: do not convert bytecode...
+
+-crunch:
+   [crunch] Crunching PNG Files in source dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/res
+   [crunch] To destination dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/res
+   [crunch] Crunched 0 PNG files to update cache
+
+-package-resources:
+     [echo] Library project: do not package resources...
+
+-package:
+     [echo] Library project: do not package apk...
+
+-post-package:
+
+-release-prompt-for-password:
+
+-release-nosign:
+     [echo] 
+[propertyfile] Creating new property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/build.prop
+
+-release-sign:
+
+-post-build:
+
+release:
+
+-code-gen:
+[mergemanifest] Merging AndroidManifest files into one.
+[mergemanifest] Manifest merger disabled. Using project manifest only.
+     [echo] Handling aidl files...
+     [aidl] No AIDL files to compile.
+     [echo] ----------
+     [echo] Handling RenderScript files...
+     [echo] ----------
+     [echo] Handling Resources...
+     [aapt] Generating resource IDs...
+     [aapt] aapt: warning: string &apos;menu_settings&apos; has no default translation in /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/res; found: ar bg ca cs da de el es eu fi fr he hi hu id it iw ja ko nl pl pt ru sk sl sv tr zh_CN zh_TW
+     [echo] ----------
+     [echo] Handling BuildConfig class...
+[buildconfig] Generating BuildConfig class.
+
+-pre-compile:
+     [echo] Set jars path to: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes.jar:/private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/libs/com.google.zxing.client.android.captureactivity.jar
+
+-compile:
+    [javac] Compiling 10 source files to /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/classes
+    [javac] Note: Some input files use or override a deprecated API.
+    [javac] Note: Recompile with -Xlint:deprecation for details.
+
+-post-compile:
+
+-obfuscate:
+
+-dex:
+      [dex] input: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/classes
+      [dex] input: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes.jar
+      [dex] input: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/libs/com.google.zxing.client.android.captureactivity.jar
+      [dex] Pre-Dexing /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build/classes.jar -&gt; classes-78b5e4c2573479a38fcadf2ee0d135b6.jar
+      [dex] Pre-Dexing /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/libs/com.google.zxing.client.android.captureactivity.jar -&gt; com.google.zxing.client.android.captureactivity-9f512105226b729ab91e431999b0d14c.jar
+      [dex] Converting compiled files and external libraries into /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/classes.dex...
+       [dx] Merged dex A (32 defs/43.2KiB) with dex B (207 defs/313.9KiB). Result is 239 defs/432.6KiB. Took 0.3s
+       [dx] Merged dex A (239 defs/432.6KiB) with dex B (343 defs/552.6KiB). Result is 582 defs/1242.6KiB. Took 0.4s
+
+-crunch:
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch] Crunching PNG Files in source dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res
+   [crunch] To destination dir: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/ic_action_next_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_next_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_next_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/ic_action_previous_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_previous_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_previous_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/ic_action_remove.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_remove.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/ic_action_remove.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/launcher_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/launcher_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/launcher_icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/screen.9.png: 53% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-hdpi/shopper_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/shopper_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-hdpi/shopper_icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-hdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-hdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-hdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-hdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-hdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-hdpi/screen.9.png: 53% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-ldpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-ldpi/icon.png
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-ldpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-mdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-mdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-mdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-xhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xhdpi/icon.png: 75% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-xhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xhdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xhdpi/screen.9.png: 60% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-xxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxhdpi/icon.png: 45% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-xxhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxhdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxhdpi/screen.9.png: 58% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-land-xxxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-land-xxxhdpi/icon.png: 66% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-ldpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-ldpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-ldpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-mdpi/ic_action_next_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_next_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_next_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-mdpi/ic_action_previous_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_previous_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_previous_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-mdpi/ic_action_remove.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_remove.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/ic_action_remove.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-mdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-mdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-hdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-hdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-hdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-hdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-hdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-hdpi/screen.9.png: 53% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-ldpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-ldpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-ldpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-mdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-mdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-mdpi/icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-xhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xhdpi/icon.png: 75% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-xhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xhdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xhdpi/screen.9.png: 60% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-xxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxhdpi/icon.png: 45% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-xxhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxhdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxhdpi/screen.9.png: 58% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-port-xxxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-port-xxxhdpi/icon.png: 66% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/ic_action_next_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_next_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_next_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/ic_action_previous_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_previous_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_previous_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/ic_action_remove.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_remove.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/ic_action_remove.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/icon.png: 75% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/launcher_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/launcher_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/launcher_icon.png: 46% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/screen.9.png
+   [crunch] libpng warning: Ignoring incorrect cHRM value when sRGB is also present
+   [crunch] wx=0.281990, wy=0.296150, rx=0.630950, ry=0.329750
+   [crunch] gx=0.288260, gy=0.582210, bx=0.125540, by=0.049400
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xhdpi/screen.9.png: 60% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/ic_action_next_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_next_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_next_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/ic_action_previous_item.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_previous_item.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_previous_item.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/ic_action_remove.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_remove.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/ic_action_remove.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/icon.png: 45% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/launcher_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/launcher_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/launcher_icon.png: 63% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxhdpi/screen.9.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/screen.9.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxhdpi/screen.9.png: 58% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable-xxxhdpi/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxxhdpi/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable-xxxhdpi/icon.png: 66% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable/icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/icon.png: 53% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable/launcher_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/launcher_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/launcher_icon.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable/share_via_barcode.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/share_via_barcode.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/share_via_barcode.png: 0% size of source)
+   [crunch] Processing image to cache: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/res/drawable/shopper_icon.png =&gt; /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/shopper_icon.png
+   [crunch]   (processed image to cache entry /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/res/drawable/shopper_icon.png: 0% size of source)
+   [crunch] Crunched 47 PNG files to update cache
+
+-package-resources:
+     [aapt] Creating full resource package...
+     [aapt]     (skipping file &apos;.bower.json&apos; due to ANDROID_AAPT_IGNORE pattern &apos;.*&apos;)
+     [aapt]     (skipping file &apos;.bower.json&apos; due to ANDROID_AAPT_IGNORE pattern &apos;.*&apos;)
+     [aapt]     (skipping file &apos;.bower.json&apos; due to ANDROID_AAPT_IGNORE pattern &apos;.*&apos;)
+     [aapt]     (skipping file &apos;.bower.json&apos; due to ANDROID_AAPT_IGNORE pattern &apos;.*&apos;)
+     [aapt] aapt: warning: string &apos;menu_settings&apos; has no default translation in /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/res; found: ar bg ca cs da de el es eu fi fr he hi hu id it iw ja ko nl pl pt ru sk sl sv tr zh_CN zh_TW
+
+-package:
+[apkbuilder] Current build type is different than previous build: forced apkbuilder run.
+[apkbuilder] Creating Monaca-release-unsigned.apk for release...
+
+-post-package:
+
+-release-prompt-for-password:
+
+-release-nosign:
+
+-release-sign:
+     [echo] Signing final apk...
+ [zipalign] Running zip align on final apk...
+     [echo] Release Package: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/Monaca-release.apk
+[propertyfile] Creating new property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/build.prop
+[propertyfile] Updating property file: /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/build.prop
+
+-post-build:
+     [move] Moving 1 file to /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build
+     [move] Moving 1 file to /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/CordovaLib/ant-build
+
+release:
+
+BUILD SUCCESSFUL
+Total time: 26 seconds
+#SUCCESS# /private/tmp/monaca/551a34d1fd1734a65ee08cd0/android/skeleton/platforms/android/ant-build/Monaca-release.apk
+Uploading back to the server...OK 551a34d1fd1734a65ee08cd0/20150331144742-Monaca-release.apk

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="com.chai.chaiapp" version="1.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.chaiapp.chai" version="1.0.0">
   <name>CHAIapp</name>
   <description>Hello World App</description>
   <author/>
@@ -9,9 +9,14 @@
   <preference name="monaca:androidVersionCode" value="1"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="monaca:DisableCookie" value="false"/>
+  <plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser"/>
   <feature name="App">
     <param name="android-package" value="org.apache.cordova.App"/>
   </feature>
+  <access origin="*"/>
+  <access origin="*.chaiapp.*"/>
+  <access origin="*.hostip.*"/>
+  <access origin="*.paypal.*"/>
   <access origin="*"/>
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
@@ -21,6 +26,4 @@
   <preference name="SplashScreenDelay" value="1000"/>
   <preference name="Fullscreen" value="false"/>
   <preference name="BackgroundColor" value="0xffffffff"/>
-  <access origin="*.chaiapp.*" launch-external="yes" />
-  <access origin="*.hostip.*" launch-external="yes" />
 </widget>
