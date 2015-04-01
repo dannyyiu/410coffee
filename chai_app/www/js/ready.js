@@ -245,6 +245,7 @@ function cart() {
       // index: -1 cancel, 0 not yet, 1 checkout
       // Get PayPal token
       if (index == 1) {
+        cart_total_update();
         var orderdetails = get_orderdetails();
         var total = get_cart_total();
         var token = get_token(total, orderdetails);
@@ -255,10 +256,16 @@ function cart() {
         };
         // Note: paypal redirect after completion is set on cloud.
         //app.navi.pushPage("paypal.html", options);
-        var ref = window.open(PAYPAL_INCONEXT_URL + token, '_blank', 'location=no');
-        ref.addEventListener('exit', function() {
-          ref.close();
-        });
+        if (parseFloat(total) > 0 && token) {
+          var ref = window.open(PAYPAL_INCONEXT_URL + token, '_blank', 'location=no');
+          ref.addEventListener('exit', function() {
+            ref.close();
+          });
+        } else if (parseFloat(total) <= 0) {
+          alert("Please put items in cart before checkout.");
+        } else if (!token) {
+          alert("Error retrieving PayPal token from server.");
+        }
       }
     }
   });
@@ -415,11 +422,17 @@ function cart_total_update(object) {
   } else {
     // Used for all other global cart updates
     // Loop through all saved cart items in the store.html template
+    var looped = ""; // keep track of duplicates
+    // Note: popup dialog and actual cart has the same html, resulting in duplicate IDs
     $( ".cart-list-item" ).each(function( index ) {
-      var quantity = parseInt($(this).find(".cart-quantity").text());
-      var cart_text = $(this).find('.cart-text').text();
-      var price = parseFloat(cart_text.substring(cart_text.indexOf("$")+1));
-      total += (price * quantity);
+      var id = $(this).attr('id');
+      if (!(looped.indexOf(id) > -1)) { // ignore duplicate rows
+        var quantity = parseInt($(this).find(".cart-quantity").text());
+        var cart_text = $(this).find('.cart-text').text();
+        var price = parseFloat(cart_text.substring(cart_text.indexOf("$")+1));
+        total += (price * quantity);
+        looped += id;
+      };
     });
     $("#cart-total-val").html("Tax:&nbsp;&nbsp;&nbsp;$" + (TAX * total).toFixed(2) + "<br/>" + 
                               "Total:&nbsp;$" + (total + (total * TAX)).toFixed(2));
@@ -444,6 +457,7 @@ function get_token(amt, orderdetails, email) {
   url += "&orderdetails=" + orderdetails;
   url += "&store_id=" + STORE_ID;
   
+  //alert(url);
   // Call server to get PayPal token
   var token;
   $.ajax({
