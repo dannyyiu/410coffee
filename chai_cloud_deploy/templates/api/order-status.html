@@ -1,0 +1,161 @@
+{% load custom_filters %}
+{% load staticfiles %}
+<html>
+<head>
+  <title> Order Status </title>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/plugins/font-awesome/css/font-awesome.min.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/plugins/simple-line-icons/simple-line-icons.min.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/plugins/bootstrap/css/bootstrap.min.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/plugins/uniform/css/uniform.default.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"%}" rel="stylesheet" type="text/css"/>
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN THEME STYLES -->
+    <link href="{% static "assets/global/css/components-rounded.css"%}" id="style_components" rel="   stylesheet" type="text/css"/>
+    <link href="{% static "assets/global/css/plugins.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/admin/layout4/css/layout.css"%}" rel="stylesheet" type="text/css"/>
+    <link href="{% static "assets/admin/layout4/css/themes/light.css"%}" rel="stylesheet" type="text/css"    id="style_color"/>
+    <link href="{% static "assets/admin/layout4/css/custom.css"%}" rel="stylesheet" type="text/css"/>
+    <!-- END THEME STYLES -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "jquery.gracefulWebSocket.js" %}"></script>
+    <script type="text/javascript">
+    $(document).ready( function() {
+      // Define websocket
+      window.socket = {};
+      socket.ws = $.gracefulWebSocket("{{ WS_URL }}");
+      socket.send = function (message) {
+        socket.ws.send(message);
+      }
+      socket.ws.onmessage = function (event) {
+        // Gets a WS request from Customer/Store
+        var messageFromServer = event.data;
+        // If WS is from a new customer order
+        parsed = JSON.parse(messageFromServer);
+        if (parsed['action'] == "detail_complete") {
+          // Order info
+          var detailid = parsed['detail_id'];
+          // Compare with IDs in table, change to Complete where match
+          $("#det-" + detailid).text("COMPLETE");
+          $("#det-" + detailid).css("color", "green");
+
+        };
+      };
+      
+    });
+    </script>
+</head>
+<body class="page-header-fixed page-sidebar-closed-hide-logo ">
+
+  <!-- BEGIN HEADER -->
+  <div class="page-header navbar navbar-fixed-top">
+  <!-- BEGIN HEADER INNER -->
+    <div class="page-header-inner">
+      <!-- BEGIN LOGO -->
+      <div class="page-logo">
+        <a style="margin-left:10px;">
+          <img src="{% static "logos/chai_logo2_smb.jpg"%}" alt="logo" class="logo-default" style="margin-top:10px;"/>
+        </a>
+      </div>
+      <!-- END LOGO -->
+    </div>
+    <!-- END HEADER INNER -->
+  </div>
+  <!-- END HEADER -->
+
+  <!-- BEGIN PAGE CONTAINER -->
+  <div class="page-container">
+    <div class="page-content-wrapper">
+
+    <!-- BEGIN CURRENT ORDERS-->
+        <div style="padding: 10px 10px 10px 10px;">
+        <div class="portlet box yellow">
+          <div class="portlet-title">
+            <div class="caption">
+              Order Status
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div id="orderlist" class="table-scrollable">
+              <table class="table table-bordered table-hover" style="font-size:13px;">
+                <thead>
+                  <tr class="uppercase">
+                    <th>
+                     ORDER
+                   </th>
+                   <th>
+                     PRODUCT
+                   </th>
+                   <th>
+                   #
+                   </th>
+                   <th>
+                     STATUS
+                   </th>
+                 </tr>
+               </thead>
+               <tbody>
+                {% for order in customer_orders %}
+                {% with details=order.orderdetail_set.all %}
+                {% with rowspan=details|length %}
+                <tr class="first-row">
+                  <td class="rowsp" rowspan="{{ rowspan }}">{{ order.cust.fname }} {{ order.cust.lname }} <small style="opacity:0.4"><br/>Order ID:{{ order.ord_id }}<br/>({{ order.time|date:'h:i A' }})</small></td>
+                  {% if details.0.active %}
+                  <td>{{ details.0.prod.prod_name }} <small style="opacity:0.4">{{ details.0.op.op_name|title }}</small></td>
+                  <td>{{ details.0.quantity }}</td>
+                  <td id="det-{{ details.0.id }}" style="color:red; font-weight:bold">IN PROGRESS</td>
+                  {% else %}
+                  <td style="display:none"></td>
+                  <td style="display:none"></td>
+                  <td style="display:none"></td>
+                  {% endif %}
+                </tr>
+                <!-- Additional details start -->
+                {% for detail in details|slice:"1:" %}
+                <tr class="sub-row">
+                  {% if detail.active %}
+                  <td>{{ detail.prod.prod_name }} <small style="opacity:0.4">{{ detail.op.op_name|title }}</small></td>
+                  <td>{{ detail.quantity }}</td>
+                  <td id="det-{{ detail.id }}" style="color:red; font-weight:bold">IN PROGRESS</td>
+                  {% else %}
+                  <td style="display:none"></td>
+                  <td style="display:none"></td>
+                  <td style="display:none"></td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+                <!-- Additional details end -->
+                {% endwith %} <!-- rowspan variable end -->
+                {% endwith %} <!-- details variable end -->
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    <!-- END CURRENT ORDERS -->
+    <!-- BEGIN FOOTER -->
+        <div style="padding: 10px 10px 10px 10px">
+          <span style="float:left">
+            2015 &copy; Mamabear. ALL Rights Reserved.
+          </span>
+          <span style="float:right">
+            <ul class="list-unstyled list-inline pull-right">
+              <li>
+                <img src="https://knowledge.rapidssl.com/library/VERISIGN/ALL_OTHER/Frank/RapidSSL_SEAL-90x50.gif   " alt="RapidSSL Site Seal" border="0" />
+              </li>
+            </ul>
+          </span>
+        </div>
+
+  <!-- END FOOTER -->
+
+</div> <!-- wrapper -->
+</div>
+<!-- END PAGE CONTAINER -->
+</body>
+</html>

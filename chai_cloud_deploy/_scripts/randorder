@@ -1,0 +1,1 @@
+http -f POST :8000/order/ order_list="[{'prod_id': 25, 'op_id':66}, {'prod_id': 45, 'op_id':102}, ]" store_name=api email=South-Park-Mexican@chai.com

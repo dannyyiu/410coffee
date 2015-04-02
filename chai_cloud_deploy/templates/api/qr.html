@@ -1,0 +1,24 @@
+{% load custom_filters %}
+{% load staticfiles %}
+<html>
+<head>
+<!-- Gererator library from: http://davidshimjs.github.io/qrcodejs/ -->
+<script type="text/javascript" src="{% static "qr/qrcode.js" %}"></script>
+<script type="text/javascript" src="{% static "qr/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "qr/qrcode.min.js" %}"></script>
+</head> 
+<body>
+<input id="data" type="hidden" value="{{json}}"/>
+<div id="qrcode"></div>
+<script>
+// Function to generate QR code
+var qrcode = new QRCode("qrcode");
+function makeCode () {      
+  var qrdata = document.getElementById("data");
+  qrcode.makeCode(qrdata.value);
+}
+
+makeCode();
+</script>
+</body>
+</html>

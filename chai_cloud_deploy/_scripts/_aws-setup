@@ -1,0 +1,30 @@
+sudo apt-get update
+sudo apt-get install apache2 libapache2-mod-wsgi
+sudo apt-get install python-setuptools
+sudo apt-get install python-pip
+sudo apt-get install python-dev
+sudo easy_install django
+sudo apt-get install mysql-server python-mysqldb
+sudo easy_install httpie
+
+sudo easy_install django-filter 
+
+sudo easy_install twisted
+sudo easy_install-2.7 pyopenssl
+sudo python twisted-websocket-4173-4/setup.py install
+
+sudo easy_install pytz
+
+sudo apt-get install libffi-dev
+sudo easy_install bcrypt
+
+sudo cp /home/ubuntu/chai_cloud_deploy/chai.conf /etc/apache2/sites-enabled/chai.conf
+
+sudo chmod -R a+x /home/ubuntu/chai_cloud_deploy/
+sudo chmod -R a+w /home/ubuntu/chai_cloud_deploy/static/
+sudo chmod -R a+w /home/ubuntu/chai_cloud_deploy/media/
+sudo chmod -R a+w /var/www/
+
+sudo a2enmod ssl
+
+sudo service apache2 restart

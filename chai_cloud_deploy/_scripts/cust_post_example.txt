@@ -1,0 +1,8 @@
+http -f POST :8000/order/ order_list="[{'prod_id':2, 'op_id':1}, {'prod_id':3, 'op_id':1}]" store_name=api email="George-A-Lorch@chai.com"
+
+http -f POST :8000/order/ order_list='[{"prod_id": 17, "op_id":41}, {"prod_id": 18, "op_id":53}, {"prod_id": 10, "op_id":25}, {"prod_id": 2, "op_id":5}]' store_name=api email=Luci-Baines-Johnson@chai.com
+
+
+'{"action":"order", "order_list":[{"prod_id": 17, "op_id":41}, {"prod_id": 18, "op_id":53}, {"prod_id": 10, "op_id":25}, {"prod_id": 2, "op_id":5}], "store_name":"api", "email":"Luci-Baines-Johnson@chai.com"}'
+
+http -f POST :1025 new_message='{"action":"order", "orderlist":[{"prodname":"Chicken Chipotle Wrap", "op":"", "opid":88}, {"prodname":"Frozen Lemondade", "op":"Reg", "opid":68}, {"prodname":"Chicken Salad Wrap", "op":"", "opid":63}, {"prodname":"Extreme Italian Sandwich", "op":"", "opid":61}, {"prodname":"Ham and Swiss Sandwich", "op":"", "opid":99}], "storename":"api", "customer":"Ralph V. Whitworth", "custid":4, "ordertime":"2015-01-26 00:39:24.826864+00:00", "orderid":25}'
