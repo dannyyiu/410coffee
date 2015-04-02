@@ -34,30 +34,33 @@
         for (category in data) {
           // HTML for each category
           // Note: category may be lower case, so capitalize CSS is used
-          html += "<ons-list-header style=\"text-transform:capitalize;\">" + 
-                  category + "</ons-list-header>\n";
-          var product;
-          for (product in data[category]) {
-            // HTML for each item
-            // header
-            var prod_id = data[category][product]['prod_id']; // required for options selection
-            html += "<ons-list-item modifier=\"tappable\" id=\"prodid-" + 
-                    prod_id + "\" class=\"list-item-container\" " + 
-                    "onclick=\"select_options(this.id)\"><ons-row>";
-            // product image
-            html += "<ons-col width=\"105px\"><img src=\"" + 
-                    IMG_URL + data[category][product]["img_url"] + 
-                    "\" class=\"store-thumbnail\"></ons-col>\n" + 
-                    "<ons-col>\n" + 
-                    "<div class=\"store-name\">" + product + "</div>\n" + 
-                    "<div class=\"store-feint\">Starting $" + 
-                    parseFloat(data[category][product]["price"]).toFixed(2) + 
-                    "</div>\n" + "<div class=\"store-desc\">" + 
-                    data[category][product]["prod_desc"] + "</div>\n" + 
-                    "</ons-col>\n</ons-row>\n</ons-list-item>";
-          }
-          //alert(JSON.stringify(data[x]));
-        }
+          if (!(jQuery.isEmptyObject(data[category]))) { // skip categories with no items
+            
+            html += "<ons-list-header style=\"text-transform:capitalize;\">" + 
+                    category + "</ons-list-header>\n";
+            var product;
+            for (product in data[category]) {
+              // HTML for each item
+              // header
+              var prod_id = data[category][product]['prod_id']; // required for options selection
+              html += "<ons-list-item modifier=\"tappable\" id=\"prodid-" + 
+                      prod_id + "\" class=\"list-item-container\" " + 
+                      "onclick=\"select_options(this.id)\"><ons-row>";
+              // product image
+              html += "<ons-col width=\"105px\"><img src=\"" + 
+                      IMG_URL + data[category][product]["img_url"] + 
+                      "\" class=\"store-thumbnail\"></ons-col>\n" + 
+                      "<ons-col>\n" + 
+                      "<div class=\"store-name\">" + product + "</div>\n" + 
+                      "<div class=\"store-feint\">Starting $" + 
+                      parseFloat(data[category][product]["price"]).toFixed(2) + 
+                      "</div>\n" + "<div class=\"store-desc\">" + 
+                      data[category][product]["prod_desc"] + "</div>\n" + 
+                      "</ons-col>\n</ons-row>\n</ons-list-item>";
+            };
+            //alert(JSON.stringify(data[x]));
+          };
+        };
         // Update store menu list
         //content.innerHTML="<ons-list-header style=\"text-transform:capitalize;\">coffee</ons-list-header>";
         //content.innerHTML += "<ons-list-item modifier=\"tappable\">asdf</ons-list-item>"

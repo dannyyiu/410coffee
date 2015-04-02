@@ -8,8 +8,7 @@
     ],
     "framework_version": "3.5",
     "xcode_version": "5",
-    "external_plugins": [
-
-    ],
-    "cordova_version": "4.1"
+    "external_plugins": [],
+    "cordova_version": "3.5"
+}4.1"
 }

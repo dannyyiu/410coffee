@@ -24,7 +24,7 @@ function login() {
   app.navi.pushPage('store.html');
 };
 
-// ============================ Register page functions ===============================
+// ========================= Register page functions ===========================
 function register() {
   
   regInfo = {
@@ -75,7 +75,7 @@ function register() {
   }; 
 };
 
-// =================================== Scan functions ===================================
+// ============================== Scan functions ==============================
 function scan() {
   //STORE_ID = "12";
   //app.navi.resetToPage("store.html", {store_id: '12'}); // Used for testing purpose only
@@ -90,6 +90,7 @@ function scan() {
       if ("store_id" in captured) {
         // Scanned QR contains store ID as an int string. (ie. "12")
         STORE_ID = captured['store_id'];
+        //alert(STORE_ID);
         app.navi.resetToPage("store.html", {store_id: captured['store_id'],});
       };
       
@@ -101,7 +102,7 @@ function scan() {
   });
 };
 
-// ============================ Option selection functions ==============================
+// ======================= Option selection functions =========================
 
 // Select options for a menu item to add to cart
 function select_options(prod_id) {
@@ -222,7 +223,7 @@ function option_select(selection, op_id) {
   $("#options-content").html($(selection).text() + " " + op_id);
 };
 
-// =================================== Cart functions =====================================
+// ============================== Cart functions ==============================
 
 // Show cart
 function cart2() {
@@ -257,7 +258,7 @@ function cart() {
         // Note: paypal redirect after completion is set on cloud.
         //app.navi.pushPage("paypal.html", options);
         if (parseFloat(total) > 0 && token) {
-          var ref = window.open(PAYPAL_INCONEXT_URL + token, '_blank', 'location=no');
+          var ref = window.open(PAYPAL_INCONEXT_URL + token, '_blank', 'location=yes');
           ref.addEventListener('exit', function() {
             ref.close();
           });
