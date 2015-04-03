@@ -19,6 +19,7 @@ sudo apt-get install libffi-dev
 sudo easy_install bcrypt
 
 sudo cp /home/ubuntu/chai_cloud_deploy/chai.conf /etc/apache2/sites-enabled/chai.conf
+sudo cp /home/ubuntu/chai_cloud_deploy/ports.conf /etc/apache2/ports.conf
 
 sudo chmod -R a+x /home/ubuntu/chai_cloud_deploy/
 sudo chmod -R a+w /home/ubuntu/chai_cloud_deploy/static/
