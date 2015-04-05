@@ -1,20 +1,18 @@
 /* Contains all page and helper functions for ready state */
 ons.bootstrap();
 
-// =================================== Globals ========================================
+// =============================== Globals ====================================
 
 // Constants
 var MAIN_URL = "https://www.chaiapp.tk/" // Domain for backend
 var IMG_URL = MAIN_URL + "static/menu_img/" // URL for all menu images
 var TAX = 0.13; // TAX rate
-var PAYPAL_INCONEXT_URL = "https://www.sandbox.paypal.com/checkoutnow/2?useraction=commit&token="
+var PAYPAL_INCONEXT_URL = 
+  "https://www.sandbox.paypal.com/checkoutnow/2?useraction=commit&token="
 var STORE_ID;
 
-// Globals
-var quantity_dict = {};
-var total_global = 0.00;
+// ========================= Login page functions =============================
 
-// ============================= Login page functions =================================
 function login() {
   loginInfo = {
     email : $('#email').val(),
@@ -24,9 +22,10 @@ function login() {
   app.navi.pushPage('store.html');
 };
 
-// ========================= Register page functions ===========================
+// ========================= Register page functions ==========================
+
+// Register button event
 function register() {
-  
   regInfo = {
     fname : $('#reg-fname').val(),
     lname : $('#reg-lname').val(),
@@ -53,51 +52,47 @@ function register() {
       var url = MAIN_URL + "c-register/";
       xmlhttp = new XMLHttpRequest();
       xmlhttp.open("POST", url, true);
-      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.setRequestHeader(
+        "Content-type","application/x-www-form-urlencoded");
       xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4) {
-          //alert(xmlhttp.status);
-          //if (xmlhttp.status == 200 || xmlhttp.status == 0) {
         };
       };
-      
       xmlhttp.send(params);
-      //alert(xmlhttp.responseText);
-      
       alert("Registered!");
       document.getElementById('email').value = postParams.email;
       app.navi.popPage();
     } else {
+      // Required fields not filled
       alert("Please fill in all required fields.");
     };
   } else {
+    // Passwords do not match
     alert("Passwords do not match! Please try again.");
   }; 
 };
 
 // ============================== Scan functions ==============================
+
+// Scan button event
 function scan() {
-  //STORE_ID = "12";
-  //app.navi.resetToPage("store.html", {store_id: '12'}); // Used for testing purpose only
-  
-  window.plugins.barcodeScanner.scan( function(result) {
-    
+  // Launch barcode scanner
+  window.plugins.barcodeScanner.scan(function(result) {
     if (result.text) {
       // Parse captured data
       captured = JSON.parse(result.text);
-      
-      // Scanned store QR code, redirect to store page of the captured store ID
       if ("store_id" in captured) {
         // Scanned QR contains store ID as an int string. (ie. "12")
         STORE_ID = captured['store_id'];
-        //alert(STORE_ID);
-        app.navi.resetToPage("store.html", {store_id: captured['store_id'],});
+        // Redirect to Store page with captured store ID
+        app.navi.resetToPage(
+          "store.html", 
+          {store_id: captured['store_id'],}
+        );
       };
-      
     };
-    
-    
   }, function(error) {
+    // Scan errors
     alert("Scanning error: " + error);
   });
 };
@@ -109,9 +104,9 @@ function select_options(prod_id) {
   // Retreive options data for the menu item selected
   // prod_id is an integer string required for the POST
   prod_id = prod_id.split("-")[1]; // Get product ID for POST params
-  var url = MAIN_URL + "c-prod/?prod_id=" + prod_id; // POST URL for options JSON
+  var url = MAIN_URL + "c-prod/?prod_id=" + prod_id; // POST URL
   var html_str = ""; // container for building html string
-  var product_obj = $("#prodid-" + prod_id); // referencing the menu DOM object pressed
+  var product_obj = $("#prodid-" + prod_id); //  menu DOM object pressed
   var prod_name = product_obj.find(".store-name").text();
   
   // Get POST response and build HTML string for options dialog
@@ -121,18 +116,22 @@ function select_options(prod_id) {
   $.getJSON(url, function(data) {
     // Response data format:
     // { op_id : { options_name : price difference }, ... }
-    // ie. {"11": {"four cheese": "0"}, "10": {"plain": "0"}, "13": {"12 grain": "0"}, "12": {"sesame seed": "0"}}
+    // ie.
+    // {"11": {"four cheese": "0"},
+    //  "10": {"plain": "0"}, 
+    //  "13": {"12 grain": "0"}, 
+    //  "12": {"sesame seed": "0"}}
     
     // Build HTML string within dialog
     var op_id;
-    var op_count = 1; // Keep track of option, used for setting initial radio checked
+    var op_count = 1; // Keep track of option, used for first radio checkmark
     for (op_id in data) {
-      var op_name;
       
+      var op_name;
       for (op_name in data[op_id]) {
-        
-        // Options pricing is determined by the base price + price difference
-        var base_price = parseFloat(product_obj.find(".store-feint").text().split("$")[1]);
+        // Options pricing = base price + price difference
+        var base_price = parseFloat(
+          product_obj.find(".store-feint").text().split("$")[1]);
         
         // Check if it's a product with no options
         if (op_name == "") {
@@ -140,11 +139,12 @@ function select_options(prod_id) {
           // Uses product name as option, and base price as price.
           
           // string format "Product ($###)":
-          var op_text = title(product_obj.find(".store-name").text() + 
-                        " ($" + base_price.toFixed(2).toString() + 
-                        ")");
+          var op_text = title(
+            product_obj.find(".store-name").text() + 
+            " ($" + base_price.toFixed(2).toString() + 
+            ")");
           
-          // onclick captures html string selection, then changes a hidden div in the store page
+          // onclick captures html string selection and changes hidden div
           html_str += '<ons-list-item id="opid-' + 
                       op_id + 
                       '" class="op-list-item" ' + 
@@ -153,7 +153,8 @@ function select_options(prod_id) {
                       '<label style="font-weight:normal" ' + 
                       'class="radio-button radio-button--list-item">';
           if (op_count == 1) {
-             html_str += '<input type="radio" name="option" checked="checked">';
+             html_str += '<input type="radio" ' + 
+                         'name="option" checked="checked">';
              option_replace(op_text, op_id); // Keep track of what's checked 
           } else {
              html_str += '<input type="radio" name="option">';
@@ -161,12 +162,11 @@ function select_options(prod_id) {
           html_str += '<div class="radio-button__checkmark ' + 
                       'radio-button--list-item__checkmark"></div>' + 
                       op_text + '</label></ons-list-item>';
-
         } else {
-          // If real options exist, use option name as the id tag and calculate new total price
+          // Real option exist, use op_id as id tag and recalculate price
           var new_price = parseFloat(data[op_id][op_name]) + base_price;
-          var op_text = title(op_name + " ($" + new_price.toFixed(2).toString() + 
-                        ")");
+          var op_text = title(
+            op_name + " ($" + new_price.toFixed(2).toString() + ")");
           
           html_str += '<ons-list-item id="opid-' + 
                       op_id + 
@@ -176,15 +176,15 @@ function select_options(prod_id) {
                       '<label style="font-weight:normal" ' + 
                       'class="radio-button radio-button--list-item">';
           if (op_count == 1) {
-             html_str += '<input type="radio" name="option" checked="checked">';
-             option_replace(op_text, op_id); // Keep track of what's checked in hidden div
+             html_str += '<input type="radio" ' + 
+                         'name="option" checked="checked">';
+             option_replace(op_text, op_id); // Keep track of what's checked
           } else {
              html_str += '<input type="radio" name="option">';
           };
           html_str += '<div class="radio-button__checkmark ' + 
                       'radio-button--list-item__checkmark"></div>' + 
                       op_text + '</label></ons-list-item>';
-          
         };
       };
       if (op_count == 1) {
@@ -203,7 +203,7 @@ function select_options(prod_id) {
       cancelable: true,
       callback: function(index) {
         if (index==1) { // Add to Cart pressed
-          selected = $("#options-content").html(); // format: "Large ($6.40) 123"
+          selected = $("#options-content").html(); //format:"Large ($6.40) 123"
           // Add to cart
           cart_add(prod_name, selected);
         };
@@ -256,11 +256,16 @@ function cart() {
           token: token,
         };
         // Note: paypal redirect after completion is set on cloud.
+        
         //app.navi.pushPage("paypal.html", options);
         if (parseFloat(total) > 0 && token) {
-          var ref = window.open(PAYPAL_INCONEXT_URL + token, '_blank', 'location=yes');
+          var ref = window.open(
+            PAYPAL_INCONEXT_URL + token, '_blank', 'location=yes,closebuttoncaption=Done,');
+          var myCallback = function() { window.open(event.url); }
+          ref.addEventListener('loadstop', myCallback);
           ref.addEventListener('exit', function() {
-            ref.close();
+            
+            app.navi.resetToPage("store.html");
           });
         } else if (parseFloat(total) <= 0) {
           alert("Please put items in cart before checkout.");
@@ -304,24 +309,24 @@ function cart_add(product, option) {
   };
   
   // Build HTML string for cart update
-  
   // format id tag for cart item: "cart-prodid-opid"
   var cart_id = "cart-" + get_prod_id(product) + "-" + op_id;
   var html_str = '<ons-list-item id="' + cart_id + '" class="cart-list-item">';
   // Cart text
   html_str += '<span style="line-height:' + line_height + 
-              ';float:left; width:65%;vertical-align:middle;" class="cart-text">' + 
-              cart_text + '</span><span style="float:right;vertical-align-middle;">';
+              ';float:left; width:65%;vertical-align:middle;" ' + 
+              'class="cart-text">' + cart_text + 
+              '</span><span style="float:right;vertical-align-middle;">';
   // Quantity buttons (default to 1 order when initially add to cart)
-  quantity_dict[cart_id] = 1; // keep track of quantity
   html_str += '<a href="" style="vertical-align:middle;color:#f78f1f;" ' + 
-              'class="fa fa-minus-circle fa-2x" onclick="cart_sub(this)"></a>&nbsp;&nbsp;&nbsp;' + 
-              '<b class="cart-quantity" style="font-size:80%;vertical-align:middle;">1</b>&nbsp;&nbsp;&nbsp;' + 
-              '<a href="" style="vertical-align:middle;color:#f78f1f;" ' + 
-              'class="fa fa-plus-circle fa-2x" onclick="cart_plus(this)"></a>' + 
+              'class="fa fa-minus-circle fa-2x" onclick="cart_sub(this)">' + 
+              '</a>&nbsp;&nbsp;&nbsp;<b class="cart-quantity" ' + 
+              'style="font-size:80%;vertical-align:middle;">1' + 
+              '</b>&nbsp;&nbsp;&nbsp;<a href="" ' + 
+              'style="vertical-align:middle;color:#f78f1f;" ' + 
+              'class="fa fa-plus-circle fa-2x" ' + 
+              'onclick="cart_plus(this)"></a>' + 
               '</span></ons-list-item>';
-              
-  
   // Update cart
   cart_append_html(html_str);
   
@@ -345,7 +350,7 @@ function cart_append_html(html_str) {
 // Cart update button (+)
 function cart_plus(button_obj) {
   // Adds 1 to current object and cart variable
-  quantity_obj = $(button_obj).parent().find(".cart-quantity") // dialog selector
+  quantity_obj = $(button_obj).parent().find(".cart-quantity") // dialog
   var quantity = parseInt(quantity_obj.text()) + 1;
   
   var cart_id = $(button_obj).parent().parent().attr('id');
@@ -362,7 +367,7 @@ function cart_plus(button_obj) {
 
 // Cart update button (-)
 function cart_sub(button_obj) {
-  var quantity_obj = $(button_obj).parent().find(".cart-quantity") // dialog selector
+  var quantity_obj = $(button_obj).parent().find(".cart-quantity") // dialog
   var quantity = parseInt(quantity_obj.text());
   
   var cart_id = $(button_obj).parent().parent().attr('id');
@@ -389,7 +394,8 @@ function cart_sub(button_obj) {
     cart_total_update(root_cart);
     
   } else if (quantity == 0) {
-    // For future development to add quantity variable to option selection dialog.
+    // For future development 
+    // To add quantity variable to option selection dialog.
     // Currently option selection dialog adds 1 quantity to cart each time.
     return;
     
@@ -418,13 +424,14 @@ function cart_total_update(object) {
       var price = parseFloat(cart_text.substring(cart_text.indexOf("$")+1));
       total += (price * quantity);
     });
-    $(object).find('#cart-total-val').html("Tax:&nbsp;&nbsp;&nbsp;$" + (TAX * total).toFixed(2) + "<br/>" + 
-                                           "Total:&nbsp;$" + (total + (total * TAX)).toFixed(2));
+    $(object).find('#cart-total-val').html(
+      "Tax:&nbsp;&nbsp;&nbsp;$" + (TAX * total).toFixed(2) + "<br/>" + 
+      "Total:&nbsp;$" + (total + (total * TAX)).toFixed(2));
   } else {
     // Used for all other global cart updates
     // Loop through all saved cart items in the store.html template
     var looped = ""; // keep track of duplicates
-    // Note: popup dialog and actual cart has the same html, resulting in duplicate IDs
+    // Note: popup dialog and actual cart has the same html, duplicate IDs
     $( ".cart-list-item" ).each(function( index ) {
       var id = $(this).attr('id');
       if (!(looped.indexOf(id) > -1)) { // ignore duplicate rows
@@ -435,12 +442,13 @@ function cart_total_update(object) {
         looped += id;
       };
     });
-    $("#cart-total-val").html("Tax:&nbsp;&nbsp;&nbsp;$" + (TAX * total).toFixed(2) + "<br/>" + 
-                              "Total:&nbsp;$" + (total + (total * TAX)).toFixed(2));
+    $("#cart-total-val").html(
+      "Tax:&nbsp;&nbsp;&nbsp;$" + (TAX * total).toFixed(2) + "<br/>" + 
+      "Total:&nbsp;$" + (total + (total * TAX)).toFixed(2));
   }
 };
 
-// ==================================== PayPal functions ====================================
+// ============================ PayPal functions ==============================
 
 // Return a token for paypal checkout, or -1 on fail.
 function get_token(amt, orderdetails, email) {
@@ -480,8 +488,7 @@ function get_token(amt, orderdetails, email) {
   return token;
 };
 
-
-// ================================= Other helper functions =================================
+// ========================== Other helper functions ==========================
 
 // Build order details URL parameter string base on shopping cart contents
 function get_orderdetails(str) {
@@ -526,6 +533,16 @@ function get_prod_id(prod_name) {
 
 // Return cart total as a string
 function get_cart_total() {
+  total_txt = $("#cart-total-val").text();
+  // raw format: "Tax:   $0.00<br>Total: $0.00"
+  return total_txt.substring(total_txt.lastIndexOf("$") + 1);
+}
+
+
+
+
+
+otal() {
   total_txt = $("#cart-total-val").text(); // raw format: "Tax:   $0.00<br>Total: $0.00"
   return total_txt.substring(total_txt.lastIndexOf("$") + 1);
   //return total_global;

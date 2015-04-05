@@ -20,7 +20,7 @@
   <access origin="*"/>
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="DisallowOverscroll" value="false"/>
   <preference name="monaca:WebViewEngine" value="default"/>
   <preference name="Orientation" value="default"/>
   <preference name="SplashScreenDelay" value="1000"/>

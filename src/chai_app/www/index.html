@@ -59,9 +59,17 @@
     <ons-page id="store-page" style="background-color:white;">
       
       <ons-toolbar>
-        <div id="cart-button" class="left"><ons-toolbar-button onclick="cart()"><i class="fa fa-shopping-cart fa-lg"></i></ons-back-button></div>
+        <div id="cart-button" class="left">
+          <ons-toolbar-button onclick="cart()">
+            <i class="fa fa-shopping-cart fa-lg"></i>
+          </ons-back-button>
+        </div>
         <div class="center">Store</div>
-        <div class="right"><ons-toolbar-button id="qr-button" onclick="scan()"><i class="fa fa-qrcode fa-lg"></i></ons-toolbar-button></div>
+        <div class="right">
+          <ons-toolbar-button id="qr-button" onclick="scan()">
+            <i class="fa fa-qrcode fa-lg"></i>
+          </ons-toolbar-button>
+        </div>
       </ons-toolbar>
       
       <!-- Container for dynamic menu -->
@@ -79,14 +87,27 @@
       <!-- Shopping cart variables (hidden) -->
       <ons-list id="cart-list" hidden>
       
-        <!-- Example template to generate
+        <!-- Store menu items generated here -->
         
-        <ons-list-item id="cart-grilled-breakfast-wraps-sausage" class="cart-list-item">
-          <span style="line-height:1;float:left; width:65%;vertical-align:middle;">Grilled Breakfast Wraps (Sausage)</span>
-          <span style="float:right;vertical-align-middle;">
-            <a href="" style="vertical-align:middle;color:#f78f1f;" class="fa fa-plus-circle fa-2x" onclick="cart_plus(this)"></a>
-            <b class="cart-quantity" style="font-size:80%;vertical-align:middle;">2</b>
-            <a href="" style="vertical-align:middle;color:#f78f1f;" class="fa fa-minus-circle fa-2x" onclick="cart_sub(this)"></a>
+        <ons-list-item id="cart-total" class="cart-list-total"> 
+          <span id="cart-total-val" style="float:right;line-height:2.1">Tax:   $0.00<br>Total: $0.00</span>  
+        </ons-list-item>
+        
+      </ons-list>
+      
+      <!-- Store menu json variable (hidden) -->
+      <div id="inventory-json" hidden></div>
+      
+    </ons-page>
+    
+  </ons-template>
+
+  <!-- End store page -->
+
+</body>
+
+</html>
+n:middle;color:#f78f1f;" class="fa fa-minus-circle fa-2x" onclick="cart_sub(this)"></a>
           </span>
         </ons-list-item>
         
