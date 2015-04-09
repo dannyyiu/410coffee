@@ -13,5 +13,3 @@
   </application>
   <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
 </manifest>
-oid:minSdkVersion="10" android:targetSdkVersion="19" />
-</manifest>

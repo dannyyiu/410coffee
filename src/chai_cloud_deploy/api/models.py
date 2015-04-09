@@ -1,9 +1,4 @@
 from django.db import models
- 
-class Photo(models.Model):
-    path = models.CharField("Path", max_length=250)
-    title = models.CharField("Title", max_length=250)
-
 
 ##############################
 # Global tables
