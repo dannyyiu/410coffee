@@ -271,7 +271,9 @@ def customer_register(request):
                     request.POST.get('pass') and \
                     request.POST.get('fname') and \
                     request.POST.get('lname'):
-            hashed = bcrypt.hashpw(request.POST['pass'].encode('utf-8'), bcrypt.gensalt())
+            hashed = bcrypt.hashpw(
+                request.POST['pass'].encode('utf-8'), 
+                bcrypt.gensalt())
             register = Customer.objects.create(
                 fname=request.POST['fname'],
                 lname=request.POST['lname'],
